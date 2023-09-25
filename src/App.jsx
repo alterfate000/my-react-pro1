@@ -20,15 +20,18 @@ function App() {
       <p>{count}</p>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)} style={{margin:20}}>
-          count is +1
+          count is + 1
         </button>
         <button onClick={() => setCount((count) => count - 1)} style={{margin:20}}>
-          count is -1
+          count is - 1
         </button>
         <button onClick={() => setCount((count) => count + 2)} style={{margin:20}}>
-          count is +2
+          count is + 2
         </button>
         <p><Hello/></p>
+        <button onClick={() => setCount((count) => count = 0)} style={{margin:20}}>
+          Reset Count
+        </button>
         
         
       </div>
