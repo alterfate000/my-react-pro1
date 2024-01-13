@@ -7,6 +7,8 @@ import Home from './component/Home.jsx';
 import About from './component/About.jsx';
 import Blog from './component/Blog.jsx'
 import Contact from './component/Contact.jsx'
+import Login from './component/login.jsx'
+
 
 
 
@@ -30,7 +32,12 @@ const router = createBrowserRouter([
   {
     path: "contact",
     element: <Contact/>
+  },
+  {
+    path: "login",
+    element: <Login/>
   }
+ 
 ])
 
 
