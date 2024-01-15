@@ -4,9 +4,9 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import Home from './component/Home.jsx';
-import About from './component/About.jsx';
-import Blog from './component/Blog.jsx'
-import Contact from './component/Contact.jsx'
+import CEO from './component/CEO.jsx';
+import Employee from './component/Employee.jsx'
+import Manager from './component/Manager.jsx'
 import Login from './component/login.jsx'
 
 
@@ -22,16 +22,16 @@ const router = createBrowserRouter([
     element: <Home/>
   },
   {
-    path: "about",
-    element: <About/>
+    path: "CEO",
+    element: <CEO/>
   },
   {
-    path: "blog",
-    element: <Blog/>
+    path: "Manager",
+    element: <Manager/>
   },
   {
-    path: "contact",
-    element: <Contact/>
+    path: "Employee",
+    element: <Employee/>
   },
   {
     path: "login",

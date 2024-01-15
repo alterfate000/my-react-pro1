@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -27,29 +27,101 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
+const theme = createTheme({
+  palette: {
+    maincolor: {
+      main: "#ffffff",
+      contrastText: "#000000",
+    },
+  },
+});
+
+const background = {
+  backgroundColor: '#86a8c5',
+  //backgroundImage: 'url(http://www.sosuco.com/material_pictureRe/SAB29020024A.jpg)' ,
+};
+
+const border = {
+  border: '1px solid #ffffff',
+
+};
+
 
 
 function Login() {
+  const [username_ln,setUsername_ln] = useState("");
+  const [password_ln,setPassword_ln] = useState("");
+
+  const data = [
+    {
+      username : "ceo",
+      password : "000",
+      State: "ceo"
+        
+    },
+    {
+      username : "manager1",
+      password : "m111",
+      State: "manager"
+    },
+    {
+      username : "employee1",
+      password : "e111",
+      State: "employee"
+    },
+    {
+      username : "employee2",
+      password : "e222",
+      State: "employee"
+    },
+    {
+      username : "manager2",
+      password : "m222",
+      State: "manager"
+    },
+];
+    
+
+
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    console.log(username_ln +" , " +password_ln);
+    data.map((row,index)=>{
+      if(username_ln == row.username && password_ln == row.password){
+        if(row.State == "ceo"){
+          window.location = 'ceo' ;
+         
+        }
+        if(row.State == "employee")
+        {
+          window.location = 'employee' ;
+        }
+        if(row.State == "manager")
+        {
+          window.location = 'manager' ;
+        }
+        
+      }
+      //console.log(index,row.username)
+    })
+    //console.log(data[0].State);
   };
 
   return (
-    <div >
-    <ThemeProvider theme={defaultTheme} >
-      <Container component="main" maxWidth="xs">
-        <div style={{backgroundColor:"#ffffff"}} >
+     <ThemeProvider theme={theme} >
+      <Container component="main" maxWidth="xs" style={background} width={700} height={500} sx={{ borderRadius: 2 }}>
+        
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 0,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            style: 'background',
           }}
           
         >
@@ -58,7 +130,7 @@ function Login() {
             ระบบจัดการตารางเดินงานซ่อมสีรถยนต์ 
           </Typography>
           <br/>
-          <Typography >
+          <Typography component="h5" variant="h7">
             บริษัท ทวีคาร์แคร์เซ็นเตอร์ จำกัด
           </Typography>
           <br/>
@@ -73,6 +145,7 @@ function Login() {
               name="username"
               autoComplete="username"
               autoFocus
+              onChange={e => setUsername_ln(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -83,6 +156,7 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={e => setPassword_ln(e.target.value)}
             />
             
             <Button
@@ -96,11 +170,11 @@ function Login() {
             
           </Box>
         </Box>
-        </div>
+       
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
-    </div>
+   
   );
 }
 

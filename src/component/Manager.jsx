@@ -1,14 +1,14 @@
 import React from 'react'
 import Nav from './Nav'
 
-function Contact() {
+function Manager() {
   return (
     <>
     <Nav/>
-    <div>Contact</div>
+    <div>Manager</div>
     </>
     
   )
 }
 
-export default Contact
+export default Manager
