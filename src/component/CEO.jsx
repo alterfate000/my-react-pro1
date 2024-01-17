@@ -142,15 +142,24 @@ function a11yProps(index) {
 function CEO() {
 
     const [employee_list,setEmployee_list] = useState([]);
+    const [car_list,setCar_list] = useState([]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             console.log('This will run after 1 second!');
-            Axios.get('http://localhost:3001/employee').then((response) => {
+            Axios.get('http://localhost:3001/employee_list').then((response) => {
                 //console.log(response);
                 setEmployee_list(response.data);
             })
         }, 10);
+
+        const timer1 = setTimeout(() => {
+            console.log('This will run after 1 second!');
+            Axios.get('http://localhost:3001/car_list').then((response) => {
+                //console.log(response);
+                setCar_list(response.data);
+            })
+        }, 30);
         // //return () => clearTimeout(timer);
         // const timer1 = setTimeout(() => {
         //     console.log('This will run after 2 second!');
@@ -177,7 +186,7 @@ function CEO() {
 
         return () => {
             clearTimeout(timer);
-            // clearTimeout(timer1);
+            clearTimeout(timer1);
             // clearTimeout(timer2);
 
 
@@ -378,6 +387,8 @@ const item = [
                                                 <TableCell width={300} align="left">last_name</TableCell>
                                                 <TableCell width={300} align="left">department</TableCell>
                                                 <TableCell width={170} align="right"></TableCell>
+                                                <TableCell width={170} align="right"></TableCell>
+                                                <TableCell width={170} align="right"></TableCell>
                                                 
                                             </TableRow>
                                         </TableHead>
@@ -391,6 +402,28 @@ const item = [
                                                     <TableCell align="left">{row.first_name}</TableCell>
                                                     <TableCell align="left">{row.last_name}</TableCell>
                                                     <TableCell align="left">{row.department}</TableCell>
+                                                    <Button
+                                                    startIcon={<DeleteIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined"
+                                                        color="error"
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        
+                                                    >
+                                                        add
+                                                    </Button>
+                                                    <Button
+                                                    startIcon={<DeleteIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined"
+                                                        color="error"
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        
+                                                    >
+                                                        edit
+                                                    </Button>
                                                     <Button
                                                     startIcon={<DeleteIcon/>}
                                                         //type="submit"
@@ -415,23 +448,55 @@ const item = [
                                     <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width={300}>id_employee</TableCell>
-                                                <TableCell width={300} align="left">first_name</TableCell>
-                                                <TableCell width={300} align="left">last_name</TableCell>
-                                                <TableCell width={300} align="left">department</TableCell>
+                                                <TableCell width={300} align="left">id_car</TableCell>
+                                                <TableCell width={300} align="left">catagory</TableCell>
+                                                <TableCell width={300} align="left">number_car</TableCell>
+                                                <TableCell width={300} align="left">province</TableCell>
+                                                <TableCell width={300} align="left">brand</TableCell>
+                                                <TableCell width={300} align="left">model</TableCell>
+                                                <TableCell width={300} align="left">year_car</TableCell>
+                                                <TableCell width={300} align="left">vin</TableCell>
+                                                <TableCell width={170} align="right"></TableCell>
+                                                <TableCell width={170} align="right"></TableCell>
                                                 <TableCell width={170} align="right"></TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                        {employee_list.map((row) => (
+                                        {car_list.map((row) => (
                                                 <TableRow
                                                     key={row.ad_username}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                 >
-                                                    <TableCell component="th" scope="row">{row.id_employee}</TableCell>
-                                                    <TableCell align="left">{row.first_name}</TableCell>
-                                                    <TableCell align="left">{row.last_name}</TableCell>
-                                                    <TableCell align="left">{row.department}</TableCell>
+                                                    <TableCell component="th" scope="row">{row.id_car}</TableCell>
+                                                    <TableCell align="left">{row.catagory}</TableCell>
+                                                    <TableCell align="left">{row.number_car}</TableCell>
+                                                    <TableCell align="left">{row.province}</TableCell>
+                                                    <TableCell align="left">{row.brand}</TableCell>
+                                                    <TableCell align="left">{row.model}</TableCell>
+                                                    <TableCell align="left">{row.year_car}</TableCell>
+                                                    <TableCell align="left">{row.vin}</TableCell>
+                                                    <Button
+                                                    startIcon={<DeleteIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined"
+                                                        color="error"
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        
+                                                    >
+                                                        add
+                                                    </Button>
+                                                    <Button
+                                                    startIcon={<DeleteIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined"
+                                                        color="error"
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        
+                                                    >
+                                                        edit
+                                                    </Button>
                                                     <Button
                                                     startIcon={<DeleteIcon/>}
                                                         //type="submit"
