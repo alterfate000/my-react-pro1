@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
-//import Axios from 'Axios';
+import Axios from 'Axios';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -141,6 +141,50 @@ function a11yProps(index) {
 
 function CEO() {
 
+    const [employee_list,setEmployee_list] = useState([]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log('This will run after 1 second!');
+            Axios.get('http://localhost:3001/employee').then((response) => {
+                //console.log(response);
+                setEmployee_list(response.data);
+            })
+        }, 10);
+        // //return () => clearTimeout(timer);
+        // const timer1 = setTimeout(() => {
+        //     console.log('This will run after 2 second!');
+        //     Axios.get('http://localhost:3001/user_list').then((response) => {
+        //         //console.log(response);
+        //         setUserList(response.data);
+        //     })
+        // }, 30);
+
+        // const timer2 = setTimeout(() => {
+        //     Axios.get('http://localhost:3001/login_admin_check').then((response) => {
+        //       //console.log(response);
+        //       if (response.data.loggedIn_admin == true) {
+        //         console.log("ttt");
+      
+        //         setLoginStatus(response.data.loggedIn_admin);
+        //       }
+        //       else{
+        //         setLoginStatus(response.data.loggedIn_admin);
+        //       }
+              
+        //     })
+        // }, 1);
+
+        return () => {
+            clearTimeout(timer);
+            // clearTimeout(timer1);
+            // clearTimeout(timer2);
+
+
+        }
+
+    }, []);
+
   const data = [
     {
       username : "ceo",
@@ -169,6 +213,7 @@ function CEO() {
       State: "manager"
     },
 ];
+
 
 
   const theme = createTheme({
@@ -239,7 +284,7 @@ const item = [
 
   return (
     <>
-    <Nav/>
+    
     <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
@@ -318,8 +363,8 @@ const item = [
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{ borderBottom: 3, borderColor: 'divider' }}>
                             <Tabs  onChange={handleChange} /*aria-label="basic tabs example"*/>
-                                <Tab label="Admin" {...a11yProps(0)} />
-                                <Tab label="Users" {...a11yProps(1)} />
+                                <Tab label="Employee" {...a11yProps(0)} />
+                                <Tab label="Car" {...a11yProps(1)} />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
@@ -328,22 +373,65 @@ const item = [
                                     <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width={300}>Username</TableCell>
-                                                <TableCell width={300} align="left">password</TableCell>
-                                                <TableCell width={300} align="left">state</TableCell>
+                                                <TableCell width={300}>id_employee</TableCell>
+                                                <TableCell width={300} align="left">first_name</TableCell>
+                                                <TableCell width={300} align="left">last_name</TableCell>
+                                                <TableCell width={300} align="left">department</TableCell>
                                                 <TableCell width={170} align="right"></TableCell>
                                                 
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {data.map((row) => (
+                                            {employee_list.map((row) => (
                                                 <TableRow
                                                     key={row.ad_username}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                 >
-                                                    <TableCell component="th" scope="row">{row.username}</TableCell>
-                                                    <TableCell align="left">{row.password}</TableCell>
-                                                    <TableCell align="left">{row.State}</TableCell>
+                                                    <TableCell component="th" scope="row">{row.id_employee}</TableCell>
+                                                    <TableCell align="left">{row.first_name}</TableCell>
+                                                    <TableCell align="left">{row.last_name}</TableCell>
+                                                    <TableCell align="left">{row.department}</TableCell>
+                                                    <Button
+                                                    startIcon={<DeleteIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined"
+                                                        color="error"
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        
+                                                    >
+                                                        Remove
+                                                    </Button>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </div>
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <div style={{ height: 300, width: '100%' }}>
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell width={300}>id_employee</TableCell>
+                                                <TableCell width={300} align="left">first_name</TableCell>
+                                                <TableCell width={300} align="left">last_name</TableCell>
+                                                <TableCell width={300} align="left">department</TableCell>
+                                                <TableCell width={170} align="right"></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                        {employee_list.map((row) => (
+                                                <TableRow
+                                                    key={row.ad_username}
+                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                >
+                                                    <TableCell component="th" scope="row">{row.id_employee}</TableCell>
+                                                    <TableCell align="left">{row.first_name}</TableCell>
+                                                    <TableCell align="left">{row.last_name}</TableCell>
+                                                    <TableCell align="left">{row.department}</TableCell>
                                                     <Button
                                                     startIcon={<DeleteIcon/>}
                                                         //type="submit"
