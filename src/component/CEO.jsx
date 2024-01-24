@@ -36,7 +36,11 @@ import TableRow from '@mui/material/TableRow';
 
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+//import SendIcon from '@mui/icons-material/Send';
+//import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import FileUploadIcon from '@mui/icons-material/FileUploadOutlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -52,6 +56,13 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Nav from './Nav'
+
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 
@@ -140,6 +151,140 @@ function a11yProps(index) {
 
 
 function CEO() {
+
+  const [open_modal, setOpen_Modal] = useState(false);
+  const [open_modal_add, setOpen_Modal_add] = useState(false);
+
+  const [open_modal_car, setOpen_Modal_car] = useState(false);
+  const [open_modal_add_car, setOpen_Modal_add_car] = useState(false);
+
+
+  const [emp_first,setEmp_first] = useState("world");
+  const [emp_last,setEmp_last] = useState("hello");
+  const [emp_department,setEmp_department] = useState("world");
+  const [emp_id,setEmp_id] = useState("world");
+
+  //-------------------------------------------------------------------------------------------------------
+
+  const delete_emp =(id)=>{
+    console.log(id);
+
+    var ans = confirm("ยืนยันลบพนักงาน id :" + id);
+        if(ans==true){
+            Axios.delete(`http://localhost:3001/delete_emp/${id}`).then((response) => {
+                setEmployee_list(
+                    employee_list.filter((val) => {
+                      return val.id_employee != id;
+                    })
+                  );
+            });
+            setEmp_id("");
+            //window.location = '/EditData';
+        }
+            
+}
+//-------------------------------------------------------------------------------------------------------
+ 
+
+  const handle_on_modal_add_car = (e) => {
+    setOpen_Modal_add_car(true);
+};
+
+
+
+
+  const handle_on_modal_add = (e) => {
+      setOpen_Modal_add(true);
+  };
+
+  const handle_addEmp = (e) => {
+    
+
+
+    Axios.post("http://localhost:3001/add_emp", {
+          first_name: emp_first,
+          last_name: emp_last,
+          department: emp_department,
+         
+
+        }).then((response) => {
+            console.log(response);
+        
+        });
+
+        Axios.get("http://localhost:3001/emp_history").then((response) => {
+              setEmployee_list(response.data);
+              
+        });
+
+
+
+
+
+    
+    setOpen_Modal_add(false);
+  };
+
+
+
+
+
+  
+//--------------------------------------------------------------------------------
+
+  const handleClickOpen_Modal = (e) => {
+    setEmp_id(e)
+    let id = e;
+        //setCheck_Click('edit');
+        Axios.get(`http://localhost:3001/edit_employee/${id}`).then((response) => {
+            //console.log(response.data[0].kl_name);
+            //setInput_value(response.data[0].ml_name);
+            setEmp_first(response.data[0].first_name)
+            setEmp_last(response.data[0].last_name)
+            setEmp_department(response.data[0].department)
+            
+            //setMemberID(response.data[0].ml_id);
+            }
+      )
+
+    //console.log(e)
+    //setInput_value(e)
+    setOpen_Modal(true);
+  };
+
+  
+  const edit_emp=(e)=>{
+    Axios.put("http://localhost:3001/update_emp", { 
+        first_name: emp_first,
+        last_name: emp_last, 
+        department: emp_department,        
+        id_employee: emp_id,
+    }).then(
+    (response) => {   
+        window.location = '/CEO';     
+        
+    }
+    );
+}
+
+//--------------------------------------------------------------------------------
+
+  const handleClose_Modal = () => {
+    setOpen_Modal(false);
+  };
+  const handleClose_Modal_add = () => {
+    setOpen_Modal_add(false);
+  };
+  const handleClose_Modal_car = () => {
+    setOpen_Modal_car(false);
+  };
+  const handleClose_Modal_add_car = () => {
+    setOpen_Modal_add_car(false);
+  };
+
+
+
+
 
     const [employee_list,setEmployee_list] = useState([]);
     const [car_list,setCar_list] = useState([]);
@@ -233,7 +378,7 @@ function CEO() {
         },
     },
 });
-const [open, setOpen] = React.useState(false);
+const [open, setOpen] = useState(false);
 
 const handleDrawerOpen = () => {
     setOpen(true);
@@ -251,42 +396,42 @@ const handleChange = (event, newValue) => {
 
 
 const item = [
-    {
-        text: 'Manage Users',
-        icon: <ManageAccountsIcon />,
-        path: '/MUser'
-    },
-    {
-        text: 'Search Project',
-        icon: <SearchIcon />,
-        path: '/MProj'
-    },
-    {
-        text: 'Srearch Publication',
-        //icon: <SearchIcon />,
-        path: '/MPub'
-    },
-    {
-        text: 'Upload Project',
-        icon: <FileUploadIcon />,
-        path: '/MUpPJ'
-    }
-    ,{
-        text: 'Upload Publication',
-        //icon: <FileUploadIcon />,
-        path: '/MUpPub'
-    },
-    {
-        text: 'Manage Keyword and Member',
-        //icon: <EditOutlinedIcon />,
-        path: '/EditData'
-    },
+     {
+         text: 'รถยนต์',
+         icon: <ManageAccountsIcon />,
+         path: '/MUser'
+     },
+     {
+         text: 'พนักงาน',
+         icon: <SearchIcon />,
+         path: '/MProj'
+     },
+    // {
+    //     text: 'Srearch Publication',
+    //     //icon: <SearchIcon />,
+    //     path: '/MPub'
+    // },
+    // {
+    //     text: 'Upload Project',
+    //     icon: <FileUploadIcon />,
+    //     path: '/MUpPJ'
+    // }
+    // ,{
+    //     text: 'Upload Publication',
+    //     //icon: <FileUploadIcon />,
+    //     path: '/MUpPub'
+    // },
+    // {
+    //     text: 'Manage Keyword and Member',
+    //     //icon: <EditOutlinedIcon />,
+    //     path: '/EditData'
+    // },
     
-    {
-        text: 'Log Out',
-        //icon: <LogoutOutlined />,
-        path: '/AdminLogin'
-    }
+     {
+         text: 'Log Out',
+         //icon: <LogoutOutlined />,
+         path: '/AdminLogin'
+     }
 ]
 
 
@@ -309,7 +454,7 @@ const item = [
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap component="div">
-                            Manage Users
+                            TCC
                         </Typography>
 
                     </Toolbar>
@@ -379,61 +524,69 @@ const item = [
                         <TabPanel value={value} index={0}>
                             <div style={{ height: 300, width: '100%' }}>
                                 <TableContainer component={Paper}>
+                                <Button
+                                                    startIcon={<AssignmentTurnedInIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined" 
+                                                        color="primary"
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        onClick={(e)=>handle_on_modal_add()}
+                                                    >
+                                                        เพิ่ม
+                      </Button> <br/>
                                     <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell width={300}>id_employee</TableCell>
-                                                <TableCell width={300} align="left">first_name</TableCell>
-                                                <TableCell width={300} align="left">last_name</TableCell>
-                                                <TableCell width={300} align="left">department</TableCell>
+                                                <TableCell width={100}>id_employee</TableCell>
+                                                <TableCell width={200} align="left">ชื่อ</TableCell>
+                                                <TableCell width={200} align="left">นามสกุล</TableCell>
+                                                <TableCell width={200} align="left">แผนก</TableCell>
                                                 <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell>
+                                                {/* <TableCell width={170} align="right"></TableCell>
+                                                <TableCell width={170} align="right"></TableCell> */}
                                                 
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                             {employee_list.map((row) => (
                                                 <TableRow
-                                                    key={row.ad_username}
+                                                    key={row.id_employee}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                 >
-                                                    <TableCell component="th" scope="row">{row.id_employee}</TableCell>
+                                                    <TableCell component="th" scope="row" >{row.id_employee} </TableCell>
                                                     <TableCell align="left">{row.first_name}</TableCell>
                                                     <TableCell align="left">{row.last_name}</TableCell>
                                                     <TableCell align="left">{row.department}</TableCell>
+                                                    
                                                     <Button
-                                                    startIcon={<DeleteIcon/>}
+                                                    startIcon={<ModeEditIcon/>}
                                                         //type="submit"
                                                         //fullWidth
                                                         variant="outlined"
-                                                        color="error"
+                                                        color="warning"
+                                                        
                                                         sx={{ mt: 1, mb: 0 }}
+                                                        onClick={(e)=>handleClickOpen_Modal(row.id_employee)}
                                                         
                                                     >
-                                                        add
+                                                        แก้ไข
                                                     </Button>
+                                                    
                                                     <Button
                                                     startIcon={<DeleteIcon/>}
                                                         //type="submit"
                                                         //fullWidth
                                                         variant="outlined"
                                                         color="error"
+                                                        
                                                         sx={{ mt: 1, mb: 0 }}
+                                                        onClick={(e) => {
+                                                            delete_emp(row.id_employee);
+                                                          }}
                                                         
                                                     >
-                                                        edit
-                                                    </Button>
-                                                    <Button
-                                                    startIcon={<DeleteIcon/>}
-                                                        //type="submit"
-                                                        //fullWidth
-                                                        variant="outlined"
-                                                        color="error"
-                                                        sx={{ mt: 1, mb: 0 }}
-                                                        
-                                                    >
-                                                        Remove
+                                                        ลบ
                                                     </Button>
                                                 </TableRow>
                                             ))}
@@ -444,21 +597,34 @@ const item = [
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             <div style={{ height: 300, width: '100%' }}>
+                            <Button
+                                                    startIcon={<AssignmentTurnedInIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined" 
+                                                        color="primary"
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        onClick={(e)=>handle_on_modal_add_car(e)}
+                                                    >
+                                                        เพิ่ม
+                      </Button> <br/>
                                 <TableContainer component={Paper}>
+                                  
                                     <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
                                                 <TableCell width={300} align="left">id_car</TableCell>
-                                                <TableCell width={300} align="left">catagory</TableCell>
-                                                <TableCell width={300} align="left">number_car</TableCell>
-                                                <TableCell width={300} align="left">province</TableCell>
-                                                <TableCell width={300} align="left">brand</TableCell>
-                                                <TableCell width={300} align="left">model</TableCell>
-                                                <TableCell width={300} align="left">year_car</TableCell>
-                                                <TableCell width={300} align="left">vin</TableCell>
-                                                <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell>
+                                                <TableCell width={300} align="left">หมวด</TableCell>
+                                                <TableCell width={300} align="left">เลขทะเบียน</TableCell>
+                                                <TableCell width={300} align="left">จังหวัด</TableCell>
+                                                <TableCell width={300} align="left">ยี่ห้อ</TableCell>
+                                                <TableCell width={300} align="left">รุ่น</TableCell>
+                                                <TableCell width={300} align="left">ปี</TableCell>
+                                                <TableCell width={300} align="left">เลขตัวถัง</TableCell>
+                                                <TableCell width={1000} align="right"></TableCell>
+                                                {/* <TableCell width={170} align="right"></TableCell>
+                                                <TableCell width={170} align="right"></TableCell> */}
+                                                
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -475,16 +641,33 @@ const item = [
                                                     <TableCell align="left">{row.model}</TableCell>
                                                     <TableCell align="left">{row.year_car}</TableCell>
                                                     <TableCell align="left">{row.vin}</TableCell>
-                                                    <Button
-                                                    startIcon={<DeleteIcon/>}
+                                                    
+                                                     <Button
+                                                    startIcon={<AssignmentTurnedInIcon/>}
                                                         //type="submit"
                                                         //fullWidth
-                                                        variant="outlined"
-                                                        color="error"
+                                                        variant="outlined" 
+                                                        color="primary"
                                                         sx={{ mt: 1, mb: 0 }}
-                                                        
+                                                        onClick={() => {
+                                                            alert('กดปุ่มสร้าง');
+                                                          }}
                                                     >
-                                                        add
+                                                        สร้าง
+                                                    </Button> 
+                                                    <Button
+                                                    startIcon={<ModeEditIcon/>}
+                                                        //type="submit"
+                                                        //fullWidth
+                                                        variant="outlined" 
+                                                        color="warning"
+                                                    
+                                                        sx={{ mt: 1, mb: 0 }}
+                                                        onClick={() => {
+                                                            alert('กดปุ่มแก้ไข');
+                                                          }}
+                                                    >
+                                                        แก้ไข
                                                     </Button>
                                                     <Button
                                                     startIcon={<DeleteIcon/>}
@@ -493,20 +676,12 @@ const item = [
                                                         variant="outlined"
                                                         color="error"
                                                         sx={{ mt: 1, mb: 0 }}
+                                                        onClick={() => {
+                                                            alert('กดปุ่มลบ');
+                                                          }}
                                                         
                                                     >
-                                                        edit
-                                                    </Button>
-                                                    <Button
-                                                    startIcon={<DeleteIcon/>}
-                                                        //type="submit"
-                                                        //fullWidth
-                                                        variant="outlined"
-                                                        color="error"
-                                                        sx={{ mt: 1, mb: 0 }}
-                                                        
-                                                    >
-                                                        Remove
+                                                        ลบ
                                                     </Button>
                                                 </TableRow>
                                             ))}
@@ -523,6 +698,166 @@ const item = [
 
                 </Main>
             </Box>
+            <Dialog
+                                                    open={open_modal}
+                                                    onClose={handleClose_Modal}
+                                                    
+                                                    maxWidth="sm"
+                                                    PaperProps={{
+                                                      component: 'form',
+                                                      onSubmit: (event) => {
+                                                        event.preventDefault();
+                                                        const formData = new FormData(event.currentTarget);
+                                                        const formJson = Object.fromEntries(formData.entries());
+                                                        s
+                                                        handleClose_Modal();
+                                                      },
+                                                    }}
+                                                  >
+                                                    <DialogTitle>แก้ไขข้อมูล</DialogTitle>
+                                                    <DialogContent>
+                                                      <DialogContentText>
+                                                        โปรดระบุข้อมูลที่ต้องการแก้ไข.
+                                                      </DialogContentText>
+                                                      <TextField
+                                                        autoFocus
+                                                        required
+                                                        margin="dense"
+                                                        label="ชื่อ"
+                                                        name="first_Name"
+                                                        //label="First Name"
+                                                        
+                                                        fullWidth
+                                                        variant="standard"
+                                                        value={emp_first}
+                                                        onChange={(event) => {
+                                                          console.log(event);
+                                                          setEmp_first(event.target.value);
+                                                        }}
+                                                      />
+                                                      <TextField
+                                                        autoFocus
+                                                        required
+                                                        margin="dense"
+                                                        id="last_Name"
+                                                        name="last_Name"
+                                                        label="นามสกุล"
+                                                        
+                                                        fullWidth
+                                                        variant="standard"
+                                                        value={emp_last}
+                                                        onChange={(event) => {
+                                                          //console.log(event.target.value);
+                                                          setEmp_last(event.target.value);
+                                                        }}
+                                                      />
+                                                      <TextField
+                                                        autoFocus
+                                                        required
+                                                        margin="dense"
+                                                        id="name"
+                                                        name="email"
+                                                        label="แผนก"
+                                                        
+                                                        fullWidth
+                                                        variant="standard"
+                                                        value={emp_department}
+                                                        onChange={(event) => {
+                                                          //console.log(event.target.value);
+                                                          setEmp_department(event.target.value);
+                                                        }}
+                                                      />
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                      <Button onClick={handleClose_Modal}>ยกเลิก</Button>
+                                                      <Button 
+                                                        onClick={(e)=>edit_emp(e)}
+
+                                                      >
+                                                        ยืนยันแก้ไข
+                                                      </Button>
+                                                    </DialogActions>
+                                                  </Dialog>
+                                                  <Dialog
+                                                    open={open_modal_add}
+                                                    onClose={handleClose_Modal}
+                                                    
+                                                    maxWidth="sm"
+                                                    PaperProps={{
+                                                      component: 'form',
+                                                      onSubmit: (event) => {
+                                                        event.preventDefault();
+                                                        const formData = new FormData(event.currentTarget);
+                                                        const formJson = Object.fromEntries(formData.entries());
+                                                        s
+                                                        handleClose_Modal();
+                                                      },
+                                                    }}
+                                                  >
+                                                    <DialogTitle>เพิ่มข้อมูล</DialogTitle>
+                                                    <DialogContent>
+                                                      <DialogContentText>
+                                                        โปรดระบุข้อมูลที่ต้องการเพิ่ม.
+                                                      </DialogContentText>
+                                                      <TextField
+                                                        autoFocus
+                                                        required
+                                                        margin="dense"
+                                                        label="ชื่อ"
+                                                        name="first_Name"
+                                                        //label="First Name"
+                                                        
+                                                        fullWidth
+                                                        variant="standard"
+                                                        //value={emp_first}
+                                                        onChange={(event) => {
+                                                          console.log(event);
+                                                          setEmp_first(event.target.value);
+                                                        }}
+                                                      />
+                                                      <TextField
+                                                        autoFocus
+                                                        required
+                                                        margin="dense"
+                                                        id="last_Name"
+                                                        name="last_Name"
+                                                        label="นามสกุล"
+                                                        
+                                                        fullWidth
+                                                        variant="standard"
+                                                        //value={emp_last}
+                                                        onChange={(event) => {
+                                                          //console.log(event.target.value);
+                                                          setEmp_last(event.target.value);
+                                                        }}
+                                                      />
+                                                      <TextField
+                                                        autoFocus
+                                                        required
+                                                        margin="dense"
+                                                        id="name"
+                                                        name="email"
+                                                        label="แผนก"
+                                                        
+                                                        fullWidth
+                                                        variant="standard"
+                                                        //value={emp_department}
+                                                        onChange={(event) => {
+                                                          //console.log(event.target.value);
+                                                          setEmp_department(event.target.value);
+                                                        }}
+                                                      />
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                      <Button onClick={handleClose_Modal_add}>ยกเลิก</Button>
+                                                      <Button 
+                                                        onClick={(e)=>handle_addEmp(e)}
+
+                                                      >
+                                                        ยืนยัน
+                                                      </Button>
+                                                    </DialogActions>
+                                                  </Dialog>
         </ThemeProvider>
     </>
     
@@ -530,6 +865,3 @@ const item = [
 }
 
 export default CEO
-
-
-
