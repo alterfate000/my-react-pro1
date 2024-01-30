@@ -413,15 +413,19 @@ function CEO() {
   //--------------------------------------------------------------------------------
 
   const handleClose_Modal = () => {
+    setEmp_department('');
     setOpen_Modal(false);
   };
   const handleClose_Modal_add = () => {
+    setEmp_department('');
     setOpen_Modal_add(false);
   };
   const handleClose_Modal_car = () => {
+    setCar_province('')
     setOpen_Modal_car(false);
   };
   const handleClose_Modal_add_car = () => {
+    setCar_province('')
     setOpen_Modal_add_car(false);
   };
 
