@@ -389,15 +389,21 @@ function Employee() {
 
   const item = [
     {
-      text: 'รถยนต์',
+      text: 'พนักงาน',
       icon: <ManageAccountsIcon />,
-      path: '/MUser'
+      path: '/CEO'
     },
     {
-      text: 'พนักงาน',
+      text: 'รถยนต์',
       icon: <SearchIcon />,
-      path: '/MProj'
+      path: '/Ceo_car'
     },
+    
+    {
+        text: 'ผู้ใช้งาน',
+        icon: <SearchIcon />,
+        path: '/Employee'
+      },
     
     // {
     //     text: 'Srearch Publication',
@@ -514,7 +520,8 @@ function Employee() {
                       localStorage.removeItem('token');
                     }
                     if (item.text == 'Log Out') {
-                      logout_on();
+                      // logout_on();
+                      window.location = '/login';
 
                     }
                     else {
@@ -544,7 +551,7 @@ function Employee() {
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 3, borderColor: 'divider' }}>
                 <Tabs onChange={handleChange} /*aria-label="basic tabs example"*/>
-                  <Tab label="Employee" {...a11yProps(0)} />
+                  <Tab label="ข้อมูลพนักงาน" {...a11yProps(0)} />
                   
                 </Tabs>
               </Box>

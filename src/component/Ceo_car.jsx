@@ -209,7 +209,7 @@ Item.propTypes = {
 
 
 
-function CEO() {
+function Ceo_car() {
 
   const [open_modal, setOpen_Modal] = useState(false);
   const [open_modal_add, setOpen_Modal_add] = useState(false);
@@ -406,7 +406,7 @@ function CEO() {
       id_car: car_id,
     }).then(
       (response) => {
-        window.location = '/CEO';
+        window.location = '/Ceo_car';
 
       }
     );
@@ -663,10 +663,10 @@ function CEO() {
     },
     
     {
-      text: 'ผู้ใช้งาน',
-      icon: <SearchIcon />,
-      path: '/Employee'
-    },
+        text: 'ผู้ใช้งาน',
+        icon: <SearchIcon />,
+        path: '/Employee'
+      },
     // {
     //     text: 'Srearch Publication',
     //     //icon: <SearchIcon />,
@@ -788,14 +788,16 @@ function CEO() {
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 3, borderColor: 'divider' }}>
                 <Tabs onChange={handleChange} /*aria-label="basic tabs example"*/>
-                  <Tab label="ข้อมูลพนักงาน" {...a11yProps(0)} />
-                  {/* <Tab label="Car" {...a11yProps(1)} /> */}
+                  {/* <Tab label="Employee" {...a11yProps(0)} /> */}
+                  <Tab label="ข้อมูลรถยนต์" {...a11yProps(0)} />
                 </Tabs>
               </Box>
 
-              <TabPanel value={value} index={0}>
+              {/* <TabPanel value={value} index={0}>
                 <div style={{ height: 300, width: '100%' }}>
-                <Box
+                  <TableContainer component={Paper}>
+
+                  <Box
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -862,9 +864,6 @@ function CEO() {
 
                 </Item>
               </Box>
-                  <TableContainer component={Paper}>
-
-                  
 
 
 
@@ -872,7 +871,7 @@ function CEO() {
                   
                     {/* <FormControl sx={{ m: 1, width: 233, mt: 0 }}>
                     ค้นหาข้อมูลแผนก
-                    </FormControl>  */}
+                    </FormControl>  
                     
 
                     
@@ -887,7 +886,7 @@ function CEO() {
                           <TableCell width={200} align="left">แผนก</TableCell>
                           <TableCell width={170} align="right"></TableCell>
                           {/* <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell> */}
+                                                <TableCell width={170} align="right"></TableCell> 
 
                         </TableRow>
                       </TableHead>
@@ -946,9 +945,9 @@ function CEO() {
                     </Table>
                   </TableContainer>
                 </div>
-              </TabPanel>
+              </TabPanel> */}
 
-              {/* <TabPanel value={value} index={1}>
+              <TabPanel value={value} index={0}>
                 <div style={{ height: 300, width: '100%' }}>
                 <Box
                 sx={{
@@ -1028,7 +1027,7 @@ function CEO() {
                           <TableCell width={300} align="left">เลขตัวถัง</TableCell>
                           <TableCell width={1000} align="right"></TableCell>
                           {/* <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell> 
+                                                <TableCell width={170} align="right"></TableCell> */}
 
                         </TableRow>
                       </TableHead>
@@ -1106,7 +1105,7 @@ function CEO() {
                     </Table>
                   </TableContainer>
                 </div>
-              </TabPanel> */}
+              </TabPanel>
 
             </Box>
 
@@ -1635,4 +1634,4 @@ function CEO() {
   )
 }
 
-export default CEO;
+export default Ceo_car;

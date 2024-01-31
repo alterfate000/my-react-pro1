@@ -10,6 +10,7 @@ import Employee from './component/Employee.jsx'
 import Manager from './component/Manager.jsx'
 import Login from './component/login.jsx'
 import Edit_employee from './component/Edit_employee.jsx'
+import Ceo_car from './component/Ceo_car.jsx'
 
 
 
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "Edit_employee",
     element: <Edit_employee/>
+  },
+  {
+    path: "Ceo_car",
+    element: <Ceo_car/>
   }
  
 ])

@@ -254,7 +254,7 @@ export default function SignInSide() {
         setLoginSucceed(true);
 
         setLoginStatus(response.data[0].ad_username);
-        //window.location = "/Home";
+        window.location = "/Home";
       }
       
     });
