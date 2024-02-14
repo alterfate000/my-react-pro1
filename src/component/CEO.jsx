@@ -522,7 +522,7 @@ function CEO() {
   const theme = createTheme({
     palette: {
       maincolor: {
-        main: "#86a8c5",
+        main: "#4d7ef0",
         contrastText: "#ffffff",
       },
     },
@@ -557,8 +557,11 @@ function CEO() {
   const department_list = [
     {id_de: '10',name:'เคาะ'},
     {id_de: '20',name:'เตรียมพื้น'},
-    {id_de: '30',name:'ผสมสี/พ่นสี'},
-    {id_de: '40',name:'ประกอบ/ขัดสี'},
+    {id_de: '30',name:'ผสมสี'},
+    {id_de: '40',name:'พ่นสี'},
+    {id_de: '50',name:'ประกอบ'},
+    {id_de: '60',name:'ขัดสี'},
+    {id_de: '70',name:'ทำความสะอาด'}
   
   ];
 
@@ -689,7 +692,7 @@ function CEO() {
     // },
 
     {
-      text: 'Log Out',
+      text: 'ออกจากระบบ',
       //icon: <LogoutOutlined />,
       path: '/AdminLogin'
     }
@@ -724,7 +727,7 @@ function CEO() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                TCC
+                พนักงาน
               </Typography>
 
             </Toolbar>
@@ -806,7 +809,7 @@ function CEO() {
                 }}
               >
                 <Item>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="small" >
+                <FormControl sx={{ m: 1, minWidth: 150 }} size="small" >
                       <InputLabel id="demo-simple-select-label">แผนก</InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
@@ -829,7 +832,9 @@ function CEO() {
                       ))}
                         
                       </Select>
-                      <Button
+                      
+                    </FormControl>
+                    <Button
                       //startIcon={<AddRoundedIcon />}
                       //type="submit"
                       //fullWidth
@@ -840,7 +845,6 @@ function CEO() {
                       >
                       ค่าเริ่มต้น
                       </Button>
-                    </FormControl>
                 
                   
                 </Item>

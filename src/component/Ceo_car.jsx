@@ -522,7 +522,7 @@ function Ceo_car() {
   const theme = createTheme({
     palette: {
       maincolor: {
-        main: "#86a8c5",
+        main: "#4d7ef0",
         contrastText: "#ffffff",
       },
     },
@@ -557,8 +557,11 @@ function Ceo_car() {
   const department_list = [
     {id_de: '10',name:'เคาะ'},
     {id_de: '20',name:'เตรียมพื้น'},
-    {id_de: '30',name:'ผสมสี/พ่นสี'},
-    {id_de: '40',name:'ประกอบ/ขัดสี'},
+    {id_de: '30',name:'ผสมสี'},
+    {id_de: '40',name:'พ่นสี'},
+    {id_de: '50',name:'ประกอบ'},
+    {id_de: '60',name:'ขัดสี'},
+    {id_de: '70',name:'ทำความสะอาด'}
   
   ];
 
@@ -689,7 +692,7 @@ function Ceo_car() {
     // },
 
     {
-      text: 'Log Out',
+      text: 'ออกจากระบบ',
       //icon: <LogoutOutlined />,
       path: '/AdminLogin'
     }
@@ -724,7 +727,7 @@ function Ceo_car() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                TCC
+                รถยนต์
               </Typography>
 
             </Toolbar>
@@ -1067,9 +1070,7 @@ function Ceo_car() {
                               variant="outlined"
                               color="primary"
                               sx={{ mt: 1, mb: 0 }}
-                              onClick={() => {
-                                alert('กดปุ่มสร้าง');
-                              }}
+                              onClick={()=>window.location = 'Create_job'}
                             >
                               สร้าง
                             </Button>
@@ -1233,6 +1234,7 @@ function Ceo_car() {
               label="หมวด"
               name="car_catagory"
               //label="First Name"
+              inputProps={{ maxLength: 3 }}
 
               fullWidth
               variant="standard"
@@ -1249,6 +1251,7 @@ function Ceo_car() {
               id="car_number_car"
               name="car_number_car"
               label="เลขทะเบียน"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1321,6 +1324,7 @@ function Ceo_car() {
               id="car_year_car"
               name="car_year_car"
               label="ปี"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1337,6 +1341,7 @@ function Ceo_car() {
               id="car_vin"
               name="car_vin"
               label="เลขตัวถัง"
+              inputProps={{ maxLength: 17 }}
 
               fullWidth
               variant="standard"
@@ -1479,6 +1484,7 @@ function Ceo_car() {
               //label="First Name"
               //pattern="[0-9]{1-4}"
               //maxLength={4}
+              inputProps={{ maxLength: 3 }}
 
               fullWidth
               variant="standard"
@@ -1496,6 +1502,7 @@ function Ceo_car() {
               name="number_car"
               label="เลขทะเบียน"
               //pattern="[0-9]{1-4}"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1586,6 +1593,7 @@ function Ceo_car() {
               name="year_car"
               label="ปี"
               //pattern="[0-9]{1-4}"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1603,6 +1611,7 @@ function Ceo_car() {
               name="vin"
               label="เลขตัวถัง"
               //pattern="{17}"
+              inputProps={{ maxLength: 17 }}
 
               fullWidth
               variant="standard"

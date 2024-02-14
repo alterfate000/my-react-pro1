@@ -197,7 +197,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Alert } from '@mui/material';
-
+//import Image_tcc from '../pic/front_tcc.jpeg';
+import image_login from '../image/front_tcc.jpeg';
 
 function Copyright() {
   return (
@@ -327,7 +328,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://c.wallhere.com/images/01/13/0ef7ee5a08043bdb9637413f9648-2277464.png!d)',
+            backgroundImage: `url(${image_login})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -387,7 +388,7 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                เข้าสู่ระบบ
               </Button>
               <Grid container>
                 <Grid item xs>
