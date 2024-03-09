@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { createBrowserRouter,RouterProvider } from 'react-router-dom'
+import { createBrowserRouter,RouterProvider ,useParams} from 'react-router-dom'
 import Home from './component/Home.jsx';
 
 import CEO from './component/CEO.jsx'
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
     element: <Ceo_car/>
   },
   {
-    path: "Create_job",
+    path:"Create_job/:pageNumber",
     element: <Create_job/>
   }
  

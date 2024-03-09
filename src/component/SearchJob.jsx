@@ -27,7 +27,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from '@mui/material/Paper';
 //import Container from '@mui/material/Container';
 //import { DataGrid } from '@mui/x-data-grid';
-
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -209,7 +209,7 @@ Item.propTypes = {
 
 
 
-function Ceo_car() {
+function CEO() {
 
   const [open_modal, setOpen_Modal] = useState(false);
   const [open_modal_add, setOpen_Modal_add] = useState(false);
@@ -406,7 +406,7 @@ function Ceo_car() {
       id_car: car_id,
     }).then(
       (response) => {
-        window.location = '/Ceo_car';
+        window.location = '/CEO';
 
       }
     );
@@ -666,36 +666,27 @@ function Ceo_car() {
     },
     
     {
-        text: 'ผู้ใช้งาน',
-        icon: <SearchIcon />,
-        path: '/Employee'
-      },
-    // {
-    //     text: 'Srearch Publication',
-    //     //icon: <SearchIcon />,
-    //     path: '/MPub'
-    // },
-    // {
-    //     text: 'Upload Project',
-    //     icon: <FileUploadIcon />,
-    //     path: '/MUpPJ'
-    // }
-    // ,{
-    //     text: 'Upload Publication',
-    //     //icon: <FileUploadIcon />,
-    //     path: '/MUpPub'
-    // },
-    // {
-    //     text: 'Manage Keyword and Member',
-    //     //icon: <EditOutlinedIcon />,
-    //     path: '/EditData'
-    // },
+      text: 'ผู้ใช้งาน',
+      icon: <SearchIcon />,
+      path: '/Employee'
+    },
 
     {
       text: 'ออกจากระบบ',
       //icon: <LogoutOutlined />,
       path: '/AdminLogin'
-    }
+    },
+    {
+      text: 'ค้นหางาน',
+      icon: <SearchIcon />,
+      path: '/SearchJob'
+    },
+    
+    {
+      text: 'สถานะงาน',
+      icon: <SearchIcon />,
+      path: '/StatusJob'
+    },
   ]
 
   const logout_on=()=>{
@@ -727,7 +718,7 @@ function Ceo_car() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                รถยนต์
+                ค้นหางาน
               </Typography>
 
             </Toolbar>
@@ -791,16 +782,14 @@ function Ceo_car() {
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 3, borderColor: 'divider' }}>
                 <Tabs onChange={handleChange} /*aria-label="basic tabs example"*/>
-                  {/* <Tab label="Employee" {...a11yProps(0)} /> */}
-                  <Tab label="ข้อมูลรถยนต์" {...a11yProps(0)} />
+                  <Tab label="ค้นหางาน" {...a11yProps(0)} />
+                  {/* <Tab label="Car" {...a11yProps(1)} /> */}
                 </Tabs>
               </Box>
 
-              {/* <TabPanel value={value} index={0}>
+              <TabPanel value={value} index={0}>
                 <div style={{ height: 300, width: '100%' }}>
-                  <TableContainer component={Paper}>
-
-                  <Box
+                <Box
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -811,8 +800,8 @@ function Ceo_car() {
                 }}
               >
                 <Item>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="small" >
-                      <InputLabel id="demo-simple-select-label">แผนก</InputLabel>
+                <FormControl sx={{ m: 1, minWidth: 150 }} size="small" >
+                      <InputLabel id="demo-simple-select-label">ผู้รับผิดชอบ</InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -834,7 +823,9 @@ function Ceo_car() {
                       ))}
                         
                       </Select>
-                      <Button
+                      
+                    </FormControl>
+                    <Button
                       //startIcon={<AddRoundedIcon />}
                       //type="submit"
                       //fullWidth
@@ -845,7 +836,6 @@ function Ceo_car() {
                       >
                       ค่าเริ่มต้น
                       </Button>
-                    </FormControl>
                 
                   
                 </Item>
@@ -853,7 +843,7 @@ function Ceo_car() {
                   
                   </Item>
                 <Item>
-                <Button
+                {/* <Button
                       startIcon={<AddRoundedIcon />}
                       //type="submit"
                       //fullWidth
@@ -863,10 +853,13 @@ function Ceo_car() {
                       onClick={(e) => handle_on_modal_add()}
                     >
                       เพิ่มข้อมูลพนักงาน
-                    </Button>
+                    </Button> */}
 
                 </Item>
               </Box>
+                  <TableContainer component={Paper}>
+
+                  
 
 
 
@@ -874,7 +867,7 @@ function Ceo_car() {
                   
                     {/* <FormControl sx={{ m: 1, width: 233, mt: 0 }}>
                     ค้นหาข้อมูลแผนก
-                    </FormControl>  
+                    </FormControl>  */}
                     
 
                     
@@ -883,13 +876,16 @@ function Ceo_car() {
                     <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
                       <TableHead>
                         <TableRow>
-                          <TableCell width={100}>id_employee</TableCell>
-                          <TableCell width={200} align="left">ชื่อ</TableCell>
-                          <TableCell width={200} align="left">นามสกุล</TableCell>
-                          <TableCell width={200} align="left">แผนก</TableCell>
+                          {/* <TableCell width={100}>id_employee</TableCell> */}
+                          <TableCell width={200} align="left">หมายเลขทะเบียน</TableCell>
+                          <TableCell width={200} align="left">เงินสด/ประกัน</TableCell>
+                          <TableCell width={200} align="left">สภาพรถ</TableCell>
+                          <TableCell width={200} align="left">วันรับเข้า</TableCell>
+                          <TableCell width={200} align="left">วันรับรถ</TableCell>
+                          <TableCell width={200} align="left">ผู้รับผิดชอบ</TableCell>
                           <TableCell width={170} align="right"></TableCell>
                           {/* <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell> 
+                                                <TableCell width={170} align="right"></TableCell> */}
 
                         </TableRow>
                       </TableHead>
@@ -908,26 +904,31 @@ function Ceo_car() {
                             key={row.id_employee}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                           >
-                            <TableCell component="th" scope="row" >{row.id_employee} </TableCell>
+                            {/* <TableCell component="th" scope="row" >{row.id_employee} </TableCell> */}
+                            <TableCell align="left">{row.first_name + " " + row.last_name}</TableCell>
+                            <TableCell align="left">{row.first_name}</TableCell>
+                            <TableCell align="left">{row.first_name}</TableCell>
                             <TableCell align="left">{row.first_name}</TableCell>
                             <TableCell align="left">{row.last_name}</TableCell>
-                            <TableCell align="left">{row.department}</TableCell>
+                            <TableCell align="left">{row.first_name + " " + row.last_name}</TableCell>
 
-                            <Button
-                              startIcon={<ModeEditIcon />}
+                             <Button
+                              startIcon={<SearchOutlinedIcon />}
                               //type="submit"
                               //fullWidth
                               variant="outlined"
-                              color="warning"
+                              color="primary"
 
                               sx={{ mt: 1, mb: 0 }}
-                              onClick={(e) => handleClickOpen_Modal(row.id_employee)}
+                              onClick={() => {
+                                alert('กดปุ่มดูเพิ่มเติม');
+                              }}
 
                             >
-                              แก้ไข
+                              ดูเพิ่มเติม
                             </Button>
 
-                            <Button
+                            {/* <Button
                               startIcon={<DeleteIcon />}
                               //type="submit"
                               //fullWidth
@@ -941,16 +942,16 @@ function Ceo_car() {
 
                             >
                               ลบ
-                            </Button>
+                            </Button> */}
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
                 </div>
-              </TabPanel> */}
+              </TabPanel>
 
-              <TabPanel value={value} index={0}>
+              {/* <TabPanel value={value} index={1}>
                 <div style={{ height: 300, width: '100%' }}>
                 <Box
                 sx={{
@@ -1030,7 +1031,7 @@ function Ceo_car() {
                           <TableCell width={300} align="left">เลขตัวถัง</TableCell>
                           <TableCell width={1000} align="right"></TableCell>
                           {/* <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell> */}
+                                                <TableCell width={170} align="right"></TableCell> 
 
                         </TableRow>
                       </TableHead>
@@ -1070,8 +1071,9 @@ function Ceo_car() {
                               variant="outlined"
                               color="primary"
                               sx={{ mt: 1, mb: 0 }}
-                              //onClick={()=>window.location = 'Create_job'}
-                              onClick={()=>window.location = `Create_job/${row.id_car}`}
+                              onClick={() => {
+                                alert('กดปุ่มสร้าง');
+                              }}
                             >
                               สร้าง
                             </Button>
@@ -1107,7 +1109,7 @@ function Ceo_car() {
                     </Table>
                   </TableContainer>
                 </div>
-              </TabPanel>
+              </TabPanel> */}
 
             </Box>
 
@@ -1235,7 +1237,6 @@ function Ceo_car() {
               label="หมวด"
               name="car_catagory"
               //label="First Name"
-              inputProps={{ maxLength: 3 }}
 
               fullWidth
               variant="standard"
@@ -1252,7 +1253,6 @@ function Ceo_car() {
               id="car_number_car"
               name="car_number_car"
               label="เลขทะเบียน"
-              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1325,7 +1325,6 @@ function Ceo_car() {
               id="car_year_car"
               name="car_year_car"
               label="ปี"
-              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1342,7 +1341,6 @@ function Ceo_car() {
               id="car_vin"
               name="car_vin"
               label="เลขตัวถัง"
-              inputProps={{ maxLength: 17 }}
 
               fullWidth
               variant="standard"
@@ -1485,7 +1483,6 @@ function Ceo_car() {
               //label="First Name"
               //pattern="[0-9]{1-4}"
               //maxLength={4}
-              inputProps={{ maxLength: 3 }}
 
               fullWidth
               variant="standard"
@@ -1503,7 +1500,6 @@ function Ceo_car() {
               name="number_car"
               label="เลขทะเบียน"
               //pattern="[0-9]{1-4}"
-              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1594,7 +1590,6 @@ function Ceo_car() {
               name="year_car"
               label="ปี"
               //pattern="[0-9]{1-4}"
-              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1612,7 +1607,6 @@ function Ceo_car() {
               name="vin"
               label="เลขตัวถัง"
               //pattern="{17}"
-              inputProps={{ maxLength: 17 }}
 
               fullWidth
               variant="standard"
@@ -1644,4 +1638,4 @@ function Ceo_car() {
   )
 }
 
-export default Ceo_car;
+export default CEO;

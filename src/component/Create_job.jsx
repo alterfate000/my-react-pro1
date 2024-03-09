@@ -68,7 +68,21 @@ import {
     randomCreatedDate,
     randomTraderName,
     randomUpdatedDate,
+    randomId,
+    randomArrayItem,
   } from '@mui/x-data-grid-generator';
+
+  //---------------------------------
+  import AddIcon from '@mui/icons-material/Add';
+  import EditIcon from '@mui/icons-material/Edit';
+import { useParams } from 'react-router-dom';
+
+
+
+
+//const [number_id,setNumber_id] = useState(0);
+let number_id = 0;
+
 
 const themes = createTheme({
     palette: {
@@ -109,6 +123,68 @@ const textshadow = {
 };
 
 
+//---------------------------------------------------------------------
+const roles = ['Market', 'Finance', 'Development'];
+const randomRole = () => {
+  return randomArrayItem(roles);
+};
+
+const initialRows = [
+    {
+      id: 1,
+      id_order: 1,
+      spares_parts: "ล้อ",
+      location_part: "L",
+    },
+    {
+      id: 2,
+      id_order:2,
+      spares_parts: "กันชน",
+      location_part: "L",
+    },
+    {
+      id: 3,
+      id_order: 3,
+      spares_parts: "กระจกข้าง",
+      location_part: "R",
+    },
+    
+];
+
+
+
+
+function EditToolbar(props) {
+  const { setRows, setRowModesModel } = props;
+
+  const handleClick = () => {
+    const id = number_id;
+    number_id = number_id + 1 ;
+    setRows((oldRows) => [...oldRows, { id, id_order: id, spares_parts: '', isNew: true }]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'id_order' },
+    }));
+  };
+
+  return (
+    <GridToolbarContainer>
+        <Typography  
+            fontFamily='Century Gothic'
+            letterSpacing={1} 
+            // textAlign='right'
+            sx={{ p: 1, borderRadius: 2 }}                                     
+        >
+            รายการซ่อม
+        </Typography>
+      <Button color="primary" variant="contained" startIcon={<AddIcon />} onClick={handleClick}>
+        เพิ่มรายการซ่อม
+      </Button>
+    </GridToolbarContainer>
+  );
+}
+
+
 
 
 
@@ -116,13 +192,21 @@ const textshadow = {
 
 function Create_job() { 
 
-    const [car_number,setCar_number] = useState("");
+    //const [car_number,setCar_number] = useState("");
     const [chassis_number,setChassis_number] = useState("");
 
+    const [testdata,setTestdata] = useState([]);
+    const { pageNumber } = useParams();
+   
+    const [pair_job_list,setPair_job_list] = useState([]);
     // const { setRows, setRowModesModel } = props;
 
 
-
+    const [car_number,setCar_number] = useState("");
+    const [car_vin,setCar_vin] = useState("");
+    const [car_brand,setCar_brand] = useState("");
+    const [car_year,setCar_year] = useState("");
+    
 
     const [value, setValue] = useState("");
     const [cm_date, setCM_date] = useState(null);
@@ -134,7 +218,7 @@ function Create_job() {
 
     const [repair_list,setRair_list] = useState("");
 
-    const [nbRows, setNbRows] = React.useState(3);
+    const [nbRows, setNbRows] =useState(3);
     const removeRow = () => setNbRows((x) => Math.max(0, x - 1));
     const addRow = () => setNbRows((x) => Math.min(100, x + 1));
 
@@ -178,7 +262,334 @@ function Create_job() {
         // console.log(str_month);
         // console.log(str_year);
         //console.log(str_year+"-"+str_month+"-"+str_day);
-      };
+    };
+
+    const haddleClickDeleteJob = (id) =>{
+        console.log(id);
+
+    }
+
+    //-------------------------------------------------------------------------
+
+    
+
+
+    //-------------------------------------------------------------------------
+
+    const [rows, setRows] = React.useState(/*initialRows*/[]);
+  const [rowModesModel, setRowModesModel] = React.useState({});
+  
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
+  };
+
+  const handleEditClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleSaveClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
+
+  const handleDeleteClick = (id) => () => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleCancelClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row) => row.id === id);
+    if (editedRow.isNew) {
+      setRows(rows.filter((row) => row.id !== id));
+    }
+  };
+
+  const processRowUpdate = (newRow) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };
+
+  const columns = [
+    {   field: 'id',
+        headerName: '',
+        width: 80,
+        editable: true 
+    },
+    // {
+    //     field: 'spares_parts',
+    //     headerName: 'อะไหล่',
+    // //   type: 'number',
+    //     width: 180,
+    //     align: 'left',
+    //     headerAlign: 'left',
+    //     editable: true,
+    // },
+    // {
+    //     field: 'location_part',
+    //     headerName: 'ตำแหน่ง',
+    //     width: 80,
+    //     editable: true,
+    //     type: 'singleSelect',
+    //     valueOptions: ['L', 'R'],
+    // },
+    // {   field: 'id_order_pair',
+    //     headerName: '',
+    //     width: 80,
+    //     editable: true 
+    // },
+    {
+        field: 'pair_detail',
+        headerName: 'อะไหล่',
+    //   type: 'number',
+        width: 180,
+        align: 'left',
+        headerAlign: 'left',
+        editable: true,
+    },
+    {
+        field: 'pair_location',
+        headerName: 'ตำแหน่ง',
+        width: 80,
+        editable: true,
+        type: 'singleSelect',
+        valueOptions: ['L', 'R'],
+    },
+    // { field: 'name', headerName: 'รายการที่', width: 80, editable: true },
+    // {
+    //   field: 'age',
+    //   headerName: 'อะไหล่',
+    // //   type: 'number',
+    //   width: 180,
+    //   align: 'left',
+    //   headerAlign: 'left',
+    //   editable: true,
+    // },
+    // {
+    //   field: 'joinDate',
+    //   headerName: 'ตำแหน่ง',
+    // //   type: 'date',
+    //   width: 180,
+    //   editable: true,
+    // },
+    // {
+    //   field: 'role',
+    //   headerName: 'ตำแหน่ง',
+    //   width: 80,
+    //   editable: true,
+    //   type: 'singleSelect',
+    //   valueOptions: ['L', 'R'],
+    // },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{
+                color: 'primary.main',
+              }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },
+    },
+  ];
+
+
+
+
+
+
+    
+
+
+
+    //----------------------test data ------------------------------------------
+
+
+    // const columns = [
+    //     { field: 'id',key: 'id', headerName: 'id', width: 50, editable: true },
+    //     { field: 'name', key: 'name', headerName: 'รายการซ่อม', width: 180, editable: true },
+    //     {
+    //       field: 'position',
+    //       headerName: 'ตำแหน่ง',
+    //       key: 'position',
+    //       editable: true,
+    //       align: 'left',
+    //       headerAlign: 'left',
+    //     },
+    //     {
+    //       field: 'total_item',
+    //       headerName: 'จำนวน',
+    //       key: 'total_item',
+    //       type: 'number',
+    //       width: 180,
+    //       editable: true,
+    //     },
+        
+    //     {
+    //       field: 'actions',
+    //       type: 'actions',
+    //       headerName: 'Actions',
+    //       width: 100,
+    //       cellClassName: 'actions',
+    //       getActions: ({ id }) => {       
+    //         // if (isInEditMode) {
+    //           return [
+    //             // <GridActionsCellItem
+    //             //   icon={<SaveIcon />}
+    //             //   label="Save"
+    //             //   sx={{
+    //             //     color: 'primary.main',
+    //             //   }}
+    //             // //   onClick={handleSaveClick(id)}
+    //             // />,
+    //             <GridActionsCellItem
+    //               icon={<CancelIcon />}
+    //               label="Cancel"
+    //               className="textPrimary"
+    //             //   onClick={handleCancelClick(id)}
+    //               //onClick={({e})=>haddleClickDeleteJob()}
+    //               color="inherit"
+    //             />,
+    //           ];
+    //         // }
+    //       },
+    //     },
+    //     // {
+    //     //   field: 'lastLogin',
+    //     //   headerName: 'Last Login',
+    //     //   type: 'dateTime',
+    //     //   width: 220,
+    //     //   editable: true,
+    //     // },
+    //   ];
+      
+    //   const rows = [
+    //     {
+    //       id: 1,
+    //       name: 'ไฟท้าย',
+    //       position: 'R',
+    //       total_item: 1,
+    //       lastLogin: randomUpdatedDate(),
+    //     },
+    //     {
+    //       id: 2,
+    //       name: 'กระจกข้าง',
+    //       position: 'L',
+    //       total_item: 2,
+    //       lastLogin: randomUpdatedDate(),
+    //     },
+    //     {
+    //       id: 3,
+    //       name: 'ประตู',
+    //       position: 'R',
+    //       total_item: 1,
+    //       lastLogin: randomUpdatedDate(),
+    //     },
+    //     {
+    //       id: 4,
+    //       name: 'ล้อหน้า',
+    //       position: 'R',
+    //       total_item: 2,
+    //       lastLogin: randomUpdatedDate(),
+    //     },
+       
+    //   ];
+
+
+      //----------------------------------------------------------------
+
+      useEffect(() => {
+        const timer = setTimeout(() => {
+          console.log('This will run after 1 second!');
+          Axios.get('http://localhost:3001/test_data').then((response) => {
+            //console.log(response);
+            setTestdata(response.data);
+          })
+        }, 10);
+
+        const timer2 = setTimeout(() => {
+            console.log('length(initialRows');
+            Axios.get(`http://localhost:3001/order_pair_list/${pageNumber}`).then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setRows(response.data);
+                console.log(response.data.length);
+                number_id = response.data.length + 1;
+               
+             
+            })
+        }, 30);
+
+        const timer1 = setTimeout(() => {
+            Axios.get(`http://localhost:3001/car_detail/${pageNumber}`).then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setCar_number(response.data[0].number_car);
+                setCar_vin(response.data[0].vin);
+                setCar_year(response.data[0].year_car);
+                setCar_brand(response.data[0].brand);
+            })
+        }, 50);
+
+        
+    
+        
+    
+        return () => {
+          clearTimeout(timer);
+          clearTimeout(timer1);
+          clearTimeout(timer2);
+      
+         
+    
+    
+        }
+    
+      }, []);
 
 
 
@@ -261,7 +672,7 @@ return (
                                         
                                         // autoFocus
                                         //placeholder = "render"
-                                        value={'กอ-1234'}
+                                        value={car_number}
                                         variant="filled"
                                         // value={car_number}
                                         // onChange={(event) => {
@@ -294,7 +705,7 @@ return (
                                         size="small"
                                         width='10'
                                         disabled
-                                        value={'VC-0012-HV'}
+                                        value={car_vin}
                                         variant="filled"
                                         // autoFocus
                                         //placeholder = "render"
@@ -329,7 +740,7 @@ return (
                                         size="small"
                                         width='10'
                                         disabled
-                                        value={'BMW'}
+                                        value={car_brand}
                                         variant="filled"
                                         // autoFocus
                                         //placeholder = "render"
@@ -364,7 +775,7 @@ return (
                                         size="small"
                                         width='10'
                                         disabled
-                                        value={'2024'}
+                                        value={car_year}
                                         variant="filled"
 
                                         // autoFocus
@@ -615,12 +1026,29 @@ return (
 
                         <Box component="form" noValidate    sx={{ mt: 3}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >
-                                
+                            
                                 <Grid item xs={12} sm={12}>
+                                    
                                     <Box sx={{ width: '90%' ,pl:3}}>
                                     <div style={{ height: 300, width: '100%' }}>
-                                        <DataGrid rows={rows} columns={columns} 
+                                        {/* <DataGrid rows={testdata} columns={columns} 
                                         
+                                        /> */}
+                                        <DataGrid
+                                            rows={rows}
+                                            columns={columns}
+                                            // getRowId={(row) => rows.id_order_pair}
+                                            editMode="row"
+                                            rowModesModel={rowModesModel}
+                                            onRowModesModelChange={handleRowModesModelChange}
+                                            onRowEditStop={handleRowEditStop}
+                                            processRowUpdate={processRowUpdate}
+                                            slots={{
+                                            toolbar: EditToolbar,
+                                            }}
+                                            slotProps={{
+                                            toolbar: { setRows, setRowModesModel },
+                                            }}
                                         />
                                         
                                     </div>                                   
@@ -805,7 +1233,7 @@ return (
                                         variant="outlined"
                                         color="maincolor"
                                         sx={{ mt: 2, mb: 2 }}
-                                        
+                                        onClick={()=>{console.log(testdata)}}
                                     >
                                         ยกเลิก
                                     </Button>
@@ -813,13 +1241,13 @@ return (
                                 <Grid item xs={12} sm={3}>
                                    
                                         <Button
-                                        startIcon={<FileUploadIcon/>}
-                                            type="submit"
+                                            startIcon={<FileUploadIcon/>}
+                                            //type="submit"
                                             fullWidth
                                             variant="contained"
                                             color="maincolor"
                                             sx={{ mt: 2, mb: 2 }}
-                                            
+                                            onClick={()=>{console.log(car_detail[0].id_car)}}
                                             //addProject
                                         >
                                         บันทึกการสั่งซ่อม
@@ -843,90 +1271,91 @@ return (
 
 export default Create_job;
 
-const columns = [
-    { field: 'id', headerName: 'id', width: 50, editable: true },
-    { field: 'name', headerName: 'รายการซ่อม', width: 180, editable: true },
-    {
-      field: 'position',
-      headerName: 'ตำแหน่ง',
+// const columns = [
+//     { field: 'id', headerName: 'id', width: 50, editable: true },
+//     { field: 'name', headerName: 'รายการซ่อม', width: 180, editable: true },
+//     {
+//       field: 'position',
+//       headerName: 'ตำแหน่ง',
       
-      editable: true,
-      align: 'left',
-      headerAlign: 'left',
-    },
-    {
-      field: 'total_item',
-      headerName: 'จำนวน',
-      type: 'number',
-      width: 180,
-      editable: true,
-    },
-    ,
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
-      width: 100,
-      cellClassName: 'actions',
-      getActions: ({ id }) => {       
-        // if (isInEditMode) {
-          return [
-            // <GridActionsCellItem
-            //   icon={<SaveIcon />}
-            //   label="Save"
-            //   sx={{
-            //     color: 'primary.main',
-            //   }}
-            // //   onClick={handleSaveClick(id)}
-            // />,
-            <GridActionsCellItem
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-            //   onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        // }
-      },
-    },
-    // {
-    //   field: 'lastLogin',
-    //   headerName: 'Last Login',
-    //   type: 'dateTime',
-    //   width: 220,
-    //   editable: true,
-    // },
-  ];
+//       editable: true,
+//       align: 'left',
+//       headerAlign: 'left',
+//     },
+//     {
+//       field: 'total_item',
+//       headerName: 'จำนวน',
+//       type: 'number',
+//       width: 180,
+//       editable: true,
+//     },
+//     ,
+//     {
+//       field: 'actions',
+//       type: 'actions',
+//       headerName: 'Actions',
+//       width: 100,
+//       cellClassName: 'actions',
+//       getActions: ({ id }) => {       
+//         // if (isInEditMode) {
+//           return [
+//             // <GridActionsCellItem
+//             //   icon={<SaveIcon />}
+//             //   label="Save"
+//             //   sx={{
+//             //     color: 'primary.main',
+//             //   }}
+//             // //   onClick={handleSaveClick(id)}
+//             // />,
+//             <GridActionsCellItem
+//               icon={<CancelIcon />}
+//               label="Cancel"
+//               className="textPrimary"
+//             //   onClick={handleCancelClick(id)}
+//               onClick={haddleClickDeleteJob(id)}
+//               color="inherit"
+//             />,
+//           ];
+//         // }
+//       },
+//     },
+//     // {
+//     //   field: 'lastLogin',
+//     //   headerName: 'Last Login',
+//     //   type: 'dateTime',
+//     //   width: 220,
+//     //   editable: true,
+//     // },
+//   ];
   
-  const rows = [
-    {
-      id: 1,
-      name: 'ไฟท้าย',
-      position: 'R',
-      total_item: 1,
-      lastLogin: randomUpdatedDate(),
-    },
-    {
-      id: 2,
-      name: 'กระจกข้าง',
-      position: 'L',
-      total_item: 2,
-      lastLogin: randomUpdatedDate(),
-    },
-    {
-      id: 3,
-      name: 'ประตู',
-      position: 'R',
-      total_item: 1,
-      lastLogin: randomUpdatedDate(),
-    },
-    {
-      id: 4,
-      name: 'ล้อหน้า',
-      position: 'R',
-      total_item: 2,
-      lastLogin: randomUpdatedDate(),
-    },
+//   const rows = [
+//     {
+//       id: 1,
+//       name: 'ไฟท้าย',
+//       position: 'R',
+//       total_item: 1,
+//       lastLogin: randomUpdatedDate(),
+//     },
+//     {
+//       id: 2,
+//       name: 'กระจกข้าง',
+//       position: 'L',
+//       total_item: 2,
+//       lastLogin: randomUpdatedDate(),
+//     },
+//     {
+//       id: 3,
+//       name: 'ประตู',
+//       position: 'R',
+//       total_item: 1,
+//       lastLogin: randomUpdatedDate(),
+//     },
+//     {
+//       id: 4,
+//       name: 'ล้อหน้า',
+//       position: 'R',
+//       total_item: 2,
+//       lastLogin: randomUpdatedDate(),
+//     },
    
-  ];
+//   ];

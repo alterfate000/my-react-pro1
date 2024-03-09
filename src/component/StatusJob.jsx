@@ -27,6 +27,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from '@mui/material/Paper';
 //import Container from '@mui/material/Container';
 //import { DataGrid } from '@mui/x-data-grid';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 
 import Table from '@mui/material/Table';
@@ -695,7 +696,17 @@ function Ceo_car() {
       text: 'ออกจากระบบ',
       //icon: <LogoutOutlined />,
       path: '/AdminLogin'
-    }
+    },{
+      text: 'ค้นหางาน',
+      icon: <SearchIcon />,
+      path: '/SearchJob'
+    },
+    
+    {
+      text: 'สถานะงาน',
+      icon: <SearchIcon />,
+      path: '/StatusJob'
+    },
   ]
 
   const logout_on=()=>{
@@ -727,7 +738,7 @@ function Ceo_car() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                รถยนต์
+                สถานะงาน
               </Typography>
 
             </Toolbar>
@@ -792,7 +803,7 @@ function Ceo_car() {
               <Box sx={{ borderBottom: 3, borderColor: 'divider' }}>
                 <Tabs onChange={handleChange} /*aria-label="basic tabs example"*/>
                   {/* <Tab label="Employee" {...a11yProps(0)} /> */}
-                  <Tab label="ข้อมูลรถยนต์" {...a11yProps(0)} />
+                  <Tab label="สถานะงาน" {...a11yProps(0)} />
                 </Tabs>
               </Box>
 
@@ -999,7 +1010,7 @@ function Ceo_car() {
                 <Item>
                   
                   </Item>
-                <Item><Button
+                {/* <Item><Button
                     startIcon={<AddRoundedIcon />}
                     //type="submit"
                     //fullWidth
@@ -1009,7 +1020,7 @@ function Ceo_car() {
                     onClick={(e) => handle_on_modal_add_car(e)}
                   >
                     เพิ่มข้อมูลรถยนต์
-                  </Button></Item>
+                  </Button></Item> */}
               </Box>
                   
                   
@@ -1020,14 +1031,13 @@ function Ceo_car() {
                     <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
                       <TableHead>
                         <TableRow>
-                          <TableCell width={100} align="left">id_car</TableCell>
-                          <TableCell width={100} align="left">หมวด</TableCell>
-                          <TableCell width={200} align="left">เลขทะเบียน</TableCell>
-                          <TableCell width={300} align="left">จังหวัด</TableCell>
-                          <TableCell width={300} align="left">ยี่ห้อ</TableCell>
-                          <TableCell width={300} align="left">รุ่น</TableCell>
-                          <TableCell width={200} align="left">ปี</TableCell>
-                          <TableCell width={300} align="left">เลขตัวถัง</TableCell>
+                          {/* <TableCell width={100} align="left">id_car</TableCell> */}
+                          <TableCell width={500} align="left">หมายเลขทะเบียน</TableCell>
+                          <TableCell width={500} align="left">เงินสด/ประกัน</TableCell>
+                          <TableCell width={300} align="left">สภาพรถ</TableCell>
+                          <TableCell width={500} align="left">วันรับเข้า</TableCell>
+                          <TableCell width={500} align="left">วันรับรถ</TableCell>
+                          <TableCell width={300} align="left">สถานะ</TableCell>
                           <TableCell width={1000} align="right"></TableCell>
                           {/* <TableCell width={170} align="right"></TableCell>
                                                 <TableCell width={170} align="right"></TableCell> */}
@@ -1054,24 +1064,25 @@ function Ceo_car() {
                             key={row.ad_username}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                           >
-                            <TableCell component="th" scope="row">{row.id_car}</TableCell>
-                            <TableCell align="left">{row.catagory}</TableCell>
+                            {/* <TableCell component="th" scope="row">{row.id_car}</TableCell> */}
+                            <TableCell align="left">{row.catagory + "-" + row.number_car + "-" + row.province }</TableCell>
                             <TableCell align="left">{row.number_car}</TableCell>
                             <TableCell align="left">{row.province}</TableCell>
                             <TableCell align="left">{row.brand}</TableCell>
                             <TableCell align="left">{row.model}</TableCell>
                             <TableCell align="left">{row.year_car}</TableCell>
-                            <TableCell align="left">{row.vin}</TableCell>
+                            {/* <TableCell align="left">{row.vin}</TableCell> */}
 
-                            <Button
+                            {/* <Button
                               startIcon={<AssignmentTurnedInIcon />}
                               //type="submit"
                               //fullWidth
                               variant="outlined"
                               color="primary"
                               sx={{ mt: 1, mb: 0 }}
-                              //onClick={()=>window.location = 'Create_job'}
-                              onClick={()=>window.location = `Create_job/${row.id_car}`}
+                              onClick={() => {
+                                alert('กดปุ่มสร้าง');
+                              }}
                             >
                               สร้าง
                             </Button>
@@ -1100,6 +1111,21 @@ function Ceo_car() {
 
                             >
                               ลบ
+                            </Button> */}
+                            <Button
+                              startIcon={<SearchOutlinedIcon />}
+                              //type="submit"
+                              //fullWidth
+                              variant="outlined"
+                              color="primary"
+
+                              sx={{ mt: 1, mb: 0 }}
+                              onClick={() => {
+                                alert('กดปุ่มดูเพิ่มเติม');
+                              }}
+
+                            >
+                              ดูเพิ่มเติม
                             </Button>
                           </TableRow>
                         ))}
