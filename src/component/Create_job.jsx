@@ -156,14 +156,15 @@ const initialRows = [
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
+  const [input_test,setInput_test] = useState('')
 
   const handleClick = () => {
     const id = number_id;
     number_id = number_id + 1 ;
-    setRows((oldRows) => [...oldRows, { id, id_order: id, spares_parts: '', isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, pair_detail: '',pair_location:'', isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'id_order' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'pair_detail' },
     }));
   };
 
@@ -223,6 +224,13 @@ function Create_job() {
     const addRow = () => setNbRows((x) => Math.min(100, x + 1));
 
 
+    const [inputDB_id, setInputDB_id] = useState("");
+    const [inputDB_pair_detail, setInputDB_pair_detail] = useState('');
+    const [inputDB_pair_location, setInputDB_pair_location] = useState('n');
+    const [inputDB_id_job, setInputDB_id_job] = useState('');
+    
+
+
 
     const { data } = useDemoData({
         dataSet: 'Commodity',
@@ -276,8 +284,8 @@ function Create_job() {
 
     //-------------------------------------------------------------------------
 
-    const [rows, setRows] = React.useState(/*initialRows*/[]);
-  const [rowModesModel, setRowModesModel] = React.useState({});
+    const [rows, setRows] = useState(/*initialRows*/[]);
+  const [rowModesModel, setRowModesModel] = useState({});
   
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -286,18 +294,47 @@ function Create_job() {
   };
 
   const handleEditClick = (id) => () => {
+    
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
   const handleSaveClick = (id) => () => {
+    
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    
+
   };
 
   const handleDeleteClick = (id) => () => {
+    console.log('handleCancelClick')
+    console.log(id)
+
+
+    var ans = confirm("ยืนยันลบรายการซ่อมที่ :" + id);
+    if (ans == true) {
+      Axios.delete('http://localhost:3001/delete_job_list',{
+        params: {
+            id: id,
+            id_job: pageNumber,
+      }}   
+        
+      ).then((response) => {
+        
+        
+      });
+      
+      //window.location = '/EditData';
+    }
+
+
+
+
+
     setRows(rows.filter((row) => row.id !== id));
   };
 
   const handleCancelClick = (id) => () => {
+    
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -316,6 +353,31 @@ function Create_job() {
   };
 
   const handleRowModesModelChange = (newRowModesModel) => {
+    console.log('rows = ');
+    console.log(rows[number_id-2]);
+
+    // set data to database
+
+    // setInputDB_id(rows[number_id-2].id);
+    // setInputDB_pair_detail(rows[number_id-2].pair_detail);
+    // setInputDB_pair_location(rows[number_id-2].pair_location);
+    // setInputDB_id_job(pageNumber);
+    // console.log('input = ')
+    // console.log(inputDB_pair_detail);
+
+    Axios.post("http://localhost:3001/add_job_list", {
+        id: rows[number_id-2].id,
+        pair_detail: rows[number_id-2].pair_detail,
+        pair_location: rows[number_id-2].pair_location,
+        id_job: pageNumber,
+        
+    }).then((response) => {
+      console.log(response);
+
+    });
+
+
+
     setRowModesModel(newRowModesModel);
   };
 
@@ -349,7 +411,7 @@ function Create_job() {
     // },
     {
         field: 'pair_detail',
-        headerName: 'อะไหล่',
+        headerName: 'รายการซ่อม',
     //   type: 'number',
         width: 180,
         align: 'left',
