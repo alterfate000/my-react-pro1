@@ -12,6 +12,7 @@ import Login from './component/login.jsx'
 import Edit_employee from './component/Edit_employee.jsx'
 import Ceo_car from './component/Ceo_car.jsx'
 import Create_job from './component/create_job.jsx'
+import Search_car from './component/Search_car.jsx'
 
 
 
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
   {
     path:"Create_job/:pageNumber",
     element: <Create_job/>
+  }
+  ,
+  {
+    path:"search_car",
+    element: <Search_car/>
   }
  
 ])

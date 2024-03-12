@@ -212,10 +212,20 @@ function Create_job() {
     const [value, setValue] = useState("");
     const [cm_date, setCM_date] = useState(null);
     const [cd_date, setCD_date] = useState(null);
+
+
+
+    //-----------เตรียมข้อมูลลง DB
+
+
     const [start_date, setStart_date] = useState();
     const [end_date, setEnd_date] = useState();
     const [car_status, setCar_status] = useState("ปกติ");
     const [pay_status, setPay_status] = useState("เงินสด");
+    const [input_detail, setInput_detail] = useState('');
+
+    //------------------------------------------
+
 
     const [repair_list,setRair_list] = useState("");
 
@@ -604,6 +614,173 @@ function Create_job() {
 
       //----------------------------------------------------------------
 
+      const [emp_step1_list,setEmp_step1_list] = useState([]);
+      const [emp_step2_list,setEmp_step2_list] = useState([]);
+      const [emp_step3_list,setEmp_step3_list] = useState([]);
+      const [emp_step4_list,setEmp_step4_list] = useState([]);
+      const [emp_step5_list,setEmp_step5_list] = useState([]);
+      const [emp_step6_list,setEmp_step6_list] = useState([]);
+      const [emp_step7_list,setEmp_step7_list] = useState([]);
+
+
+      //------------แสดงค่าที่เลือก
+
+      const [show_emp_step1,setShow_Emp_step1] = useState('--โปรดเลือกรายชื่อช่างที่ต้องการ--');
+      const [show_emp_step2,setShow_Emp_step2] = useState('--โปรดเลือกรายชื่อช่างที่ต้องการ--');
+      const [show_emp_step3,setShow_Emp_step3] = useState('--โปรดเลือกรายชื่อช่างที่ต้องการ--');
+      const [show_emp_step4,setShow_Emp_step4] = useState('--โปรดเลือกรายชื่อช่างที่ต้องการ--');
+      const [show_emp_step5,setShow_Emp_step5] = useState('--โปรดเลือกรายชื่อช่างที่ต้องการ--');
+      const [show_emp_step6,setShow_Emp_step6] = useState('--โปรดเลือกรายชื่อช่างที่ต้องการ--');
+      const [show_emp_step7,setShow_Emp_step7] = useState('--โปรดเลือกรายชื่อช่างที่ต้องการ--');
+
+      //------------แสดงค่าที่เก็บลง DB
+
+      const [emp_step1,setEmp_step1] = useState('');
+      const [emp_step2,setEmp_step2] = useState('');
+      const [emp_step3,setEmp_step3] = useState('');
+      const [emp_step4,setEmp_step4] = useState('');
+      const [emp_step5,setEmp_step5] = useState('');
+      const [emp_step6,setEmp_step6] = useState('');
+      const [emp_step7,setEmp_step7] = useState('');
+
+      //--------------------------------------
+
+      const [chk_emp_step1,setChk_Emp_step1] = useState(false);
+      const [chk_emp_step2,setChk_Emp_step2] = useState(false);
+      const [chk_emp_step3,setChk_Emp_step3] = useState(false);
+      const [chk_emp_step4,setChk_Emp_step4] = useState(false);
+      const [chk_emp_step5,setChk_Emp_step5] = useState(false);
+      const [chk_emp_step6,setChk_Emp_step6] = useState(false);
+      const [chk_emp_step7,setChk_Emp_step7] = useState(false);
+
+
+      //--------------------------------------------------------
+
+      const haddle_emp1=(e)=>{
+        // console.log('haddle_emp1')
+        // console.log(e)
+        setEmp_step1(e);
+        Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
+            //console.log(response.data);
+            setShow_Emp_step1(response.data[0].first_name +' ' + response.data[0].last_name);
+        })
+      }
+
+      const haddle_emp2=(e)=>{
+        setEmp_step2(e);
+        Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
+            //console.log(response);
+            setShow_Emp_step2(response.data[0].first_name +' ' + response.data[0].last_name);
+        })
+        
+        
+      }
+
+      const haddle_emp3=(e)=>{
+        setEmp_step3(e);
+        Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
+            //console.log(response);
+            setShow_Emp_step3(response.data[0].first_name +' ' + response.data[0].last_name);
+        })
+      }
+
+      const haddle_emp4=(e)=>{
+        setEmp_step4(e);
+        Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
+            //console.log(response);
+            setShow_Emp_step4(response.data[0].first_name +' ' + response.data[0].last_name);
+        })
+      }
+
+      const haddle_emp5=(e)=>{
+        setEmp_step5(e);
+        Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
+            //console.log(response);
+            setShow_Emp_step5(response.data[0].first_name +' ' + response.data[0].last_name);
+        })
+      }
+
+      const haddle_emp6=(e)=>{
+        setEmp_step6(e);
+        Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
+            //console.log(response);
+            setShow_Emp_step6(response.data[0].first_name +' ' + response.data[0].last_name);
+        })
+      }
+
+      const haddle_emp7=(e)=>{
+        //console.log('haddle')
+        //console.log(e)
+        setEmp_step7(e);
+        Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
+            //console.log(response);
+            setShow_Emp_step7(response.data[0].first_name +' ' + response.data[0].last_name);
+        })
+
+        
+      }
+
+      const haddle_summit_order=(e)=>{
+
+        var ans = confirm("ยืนยันบันทึกใบสั่งซ่อม" );
+        if (ans == true) {
+            Axios.post("http://localhost:3001/save_job_detail", {
+            pay_status:pay_status,
+            car_status:car_status,
+            start_date:start_date,
+            end_date:end_date,
+            input_detail:input_detail,
+            emp_step1:emp_step1,
+            emp_step2:emp_step2,
+            emp_step3:emp_step3,
+            emp_step4:emp_step4,
+            emp_step5:emp_step5,
+            emp_step6:emp_step6,
+            emp_step7:emp_step7,
+            in_car:pageNumber,
+
+            }).then((response) => {
+            console.log(response.data);
+            if(response.data != 'KO!'){
+                console.log('if')
+                Axios.put("http://localhost:3001/update_count_job", {
+                count_job: '1',
+                id_car: pageNumber,
+                }).then(
+                (response) => {
+                    window.location = '/Ceo_car';
+                    
+
+                }
+                );
+            }
+
+        });
+
+
+        }
+
+
+
+
+
+
+
+        
+
+
+        
+
+      }
+
+
+
+
+
+
+
+
+
       useEffect(() => {
         const timer = setTimeout(() => {
           console.log('This will run after 1 second!');
@@ -630,12 +807,75 @@ function Create_job() {
             Axios.get(`http://localhost:3001/car_detail/${pageNumber}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setCar_number(response.data[0].number_car);
+                setCar_number(response.data[0].catagory+"-"+response.data[0].number_car+"-"+response.data[0].province);
                 setCar_vin(response.data[0].vin);
                 setCar_year(response.data[0].year_car);
-                setCar_brand(response.data[0].brand);
+                setCar_brand(response.data[0].brand+"-"+response.data[0].model);
             })
         }, 50);
+
+        const timer3 = setTimeout(() => {
+            Axios.get('http://localhost:3001/employee_step1_list').then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setEmp_step1_list(response.data);
+                
+            })
+        }, 50);
+
+        const timer4 = setTimeout(() => {
+            Axios.get('http://localhost:3001/employee_step2_list').then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setEmp_step2_list(response.data);
+                
+            })
+        }, 70);
+
+        const timer5 = setTimeout(() => {
+            Axios.get('http://localhost:3001/employee_step3_list').then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setEmp_step3_list(response.data);
+                
+            })
+        }, 90);
+
+        const timer6 = setTimeout(() => {
+            Axios.get('http://localhost:3001/employee_step4_list').then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setEmp_step4_list(response.data);
+                
+            })
+        }, 100);
+
+        const timer7 = setTimeout(() => {
+            Axios.get('http://localhost:3001/employee_step5_list').then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setEmp_step5_list(response.data);
+                
+            })
+        }, 110);
+
+        const timer8 = setTimeout(() => {
+            Axios.get('http://localhost:3001/employee_step6_list').then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setEmp_step6_list(response.data);
+                
+            })
+        }, 120);
+
+        const timer9 = setTimeout(() => {
+            Axios.get('http://localhost:3001/employee_step7_list').then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setEmp_step7_list(response.data);
+                
+            })
+        }, 130);
 
         
     
@@ -645,6 +885,13 @@ function Create_job() {
           clearTimeout(timer);
           clearTimeout(timer1);
           clearTimeout(timer2);
+          clearTimeout(timer3);
+          clearTimeout(timer4);
+          clearTimeout(timer5);
+          clearTimeout(timer6);
+          clearTimeout(timer7);
+          clearTimeout(timer8);
+          clearTimeout(timer9);
       
          
     
@@ -652,6 +899,15 @@ function Create_job() {
         }
     
       }, []);
+
+
+      const haddle_test=(e)=>{
+        console.log(e.target.checked)
+        setChk_Emp_step1(e.target.checked) ;
+        
+      }
+
+      
 
 
 
@@ -870,8 +1126,8 @@ return (
                                         }}
                                         //defaultValue={proj_status}
                                         onChange={(event) => {
-                                            setPay_status(event.value)
-                                            console.log(event.value)
+                                            setPay_status(event.label)
+                                            //console.log(event.value)
                                         }}
                                         options={[
                                         {
@@ -910,7 +1166,7 @@ return (
                                         }}
                                         //defaultValue={proj_status}
                                         onChange={(event) => {
-                                            setCar_status(event.value)
+                                            setCar_status(event.label)
                                             console.log(event.value)
                                         }}
                                         options={[
@@ -998,6 +1254,7 @@ return (
                                         //rows={10}
                                         maxRows={10}
                                         minRows={2}
+                                        onChange={(e)=>{setInput_detail(e.target.value)}}
                                         
                                     />
                                 </Grid>
@@ -1172,10 +1429,39 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="เคาะ" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox  checked={chk_emp_step1} onChange={(e)=>{ setChk_Emp_step1(e.target.checked)}} />} label="เคาะ" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
+                        {chk_emp_step1 == true?
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={show_emp_step1}
+                                label="=ชื่อ"
+
+                                onChange={(e) => { haddle_emp1(e) }}
+                                //onChange={(e)=>console.log(e)}
+                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                                >
+                                {emp_step1_list.map((row1) => (
+                                        <MenuItem
+                                        key={row1.id_employee}
+                                        value={row1.id_employee}
+                                        //name={row1.name}
+                                        //style={getStyles(name, personName, theme)}
+                                        >
+                                        {row1.first_name +" "+row1.last_name}
+                                        </MenuItem>
+                                ))}
+                                    
+                            </Select>
+                            :
+                            <></>
+
+
+                        }
+                        
                         
                     </Box>
                     <Box
@@ -1191,10 +1477,38 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="เตรียมพื้น" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step2} onChange={(e)=>{ setChk_Emp_step2(e.target.checked)}}/>} label="เตรียมพื้น" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
+                        {chk_emp_step2 == true?
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={show_emp_step2}
+                                label="=ชื่อ"
+
+                                onChange={(e) => { haddle_emp2(e) }}
+                                //onChange={(e)=>console.log(e)}
+                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                                >
+                                {emp_step2_list.map((row1) => (
+                                        <MenuItem
+                                        key={row1.id_employee}
+                                        value={row1.id_employee}
+                                        //name={row1.name}
+                                        //style={getStyles(name, personName, theme)}
+                                        >
+                                        {row1.first_name +" "+row1.last_name}
+                                        </MenuItem>
+                                ))}
+                                    
+                            </Select>
+                            :
+                            <></>
+
+
+                        }
                         
                     </Box>
                     <Box
@@ -1210,10 +1524,86 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="ผสมสี" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step3} onChange={(e)=>{ setChk_Emp_step3(e.target.checked)}} />} label="ผสมสี" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
+                        {chk_emp_step3 == true?
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={show_emp_step3}
+                                label="=ชื่อ"
+
+                                onChange={(e) => { haddle_emp3(e) }}
+                                //onChange={(e)=>console.log(e)}
+                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                                >
+                                {emp_step3_list.map((row1) => (
+                                        <MenuItem
+                                        key={row1.id_employee}
+                                        value={row1.id_employee}
+                                        //name={row1.name}
+                                        //style={getStyles(name, personName, theme)}
+                                        >
+                                        {row1.first_name +" "+row1.last_name}
+                                        </MenuItem>
+                                ))}
+                                    
+                            </Select>
+                            :
+                            <></>
+
+
+                        }
+                        
+                    </Box>
+                    
+                    <Box
+                        sx={{
+                            paddingTop:2,
+                            marginTop: 3,
+                            paddingBottom:3,
+                            display: 'flex',
+                            flexDirection: 'column',                       
+                            boxShadow: 1
+                        }}
+                    >
+                        <Box component="form" noValidate    sx={{ mt: 2}}>
+                            <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
+                                <Grid item xs={12} sm={12}>
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step4} onChange={(e)=>{ setChk_Emp_step4(e.target.checked)}} />} label="พ่นสี" sx={{pl:5}} />                                
+                                </Grid>                        
+                            </Grid>                          
+                        </Box>
+                        {chk_emp_step4 == true?
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={show_emp_step4}
+                                label="=ชื่อ"
+
+                                onChange={(e) => { haddle_emp4(e) }}
+                                //onChange={(e)=>console.log(e)}
+                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                                >
+                                {emp_step4_list.map((row1) => (
+                                        <MenuItem
+                                        key={row1.id_employee}
+                                        value={row1.id_employee}
+                                        //name={row1.name}
+                                        //style={getStyles(name, personName, theme)}
+                                        >
+                                        {row1.first_name +" "+row1.last_name}
+                                        </MenuItem>
+                                ))}
+                                    
+                            </Select>
+                            :
+                            <></>
+
+
+                        }
                         
                     </Box>
                     <Box
@@ -1229,10 +1619,38 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="พ่นสี" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step5} onChange={(e)=>{ setChk_Emp_step5(e.target.checked)}} />} label="ประกอบ" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
+                        {chk_emp_step5 == true?
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={show_emp_step5}
+                                label="=ชื่อ"
+
+                                onChange={(e) => { haddle_emp5(e) }}
+                                //onChange={(e)=>console.log(e)}
+                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                                >
+                                {emp_step5_list.map((row1) => (
+                                        <MenuItem
+                                        key={row1.id_employee}
+                                        value={row1.id_employee}
+                                        //name={row1.name}
+                                        //style={getStyles(name, personName, theme)}
+                                        >
+                                        {row1.first_name +" "+row1.last_name}
+                                        </MenuItem>
+                                ))}
+                                    
+                            </Select>
+                            :
+                            <></>
+
+
+                        }
                         
                     </Box>
                     <Box
@@ -1248,10 +1666,38 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="ขัดสี" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step6} onChange={(e)=>{ setChk_Emp_step6(e.target.checked)}} />} label="ขัดสี" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
+                        {chk_emp_step6 == true?
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={show_emp_step6}
+                                label="=ชื่อ"
+
+                                onChange={(e) => { haddle_emp6(e) }}
+                                //onChange={(e)=>console.log(e)}
+                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                                >
+                                {emp_step6_list.map((row1) => (
+                                        <MenuItem
+                                        key={row1.id_employee}
+                                        value={row1.id_employee}
+                                        //name={row1.name}
+                                        //style={getStyles(name, personName, theme)}
+                                        >
+                                        {row1.first_name +" "+row1.last_name}
+                                        </MenuItem>
+                                ))}
+                                    
+                            </Select>
+                            :
+                            <></>
+
+
+                        }
                         
                     </Box>
                     <Box
@@ -1267,10 +1713,38 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox defaultChecked />} label="ทำความสะอาด" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step7} onChange={(e)=>{ setChk_Emp_step7(e.target.checked)}} />} label="ทำความสะอาด" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
+                        {chk_emp_step7 == true?
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={show_emp_step7}
+                                label="=ชื่อ"
+
+                                onChange={(e) => { haddle_emp7(e) }}
+                                //onChange={(e)=>console.log(e)}
+                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                                >
+                                {emp_step7_list.map((row1) => (
+                                        <MenuItem
+                                        key={row1.id_employee}
+                                        value={row1.id_employee}
+                                        //name={row1.name}
+                                        //style={getStyles(name, personName, theme)}
+                                        >
+                                        {row1.first_name +" "+row1.last_name}
+                                        </MenuItem>
+                                ))}
+                                    
+                            </Select>
+                            :
+                            <></>
+
+
+                        }
                         
                     </Box>
                     <Box
@@ -1309,7 +1783,7 @@ return (
                                             variant="contained"
                                             color="maincolor"
                                             sx={{ mt: 2, mb: 2 }}
-                                            onClick={()=>{console.log(car_detail[0].id_car)}}
+                                            onClick={(e)=>{haddle_summit_order(e)}}
                                             //addProject
                                         >
                                         บันทึกการสั่งซ่อม

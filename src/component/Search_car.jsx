@@ -209,7 +209,7 @@ Item.propTypes = {
 
 
 
-function CEO() {
+function Search_car() {
 
   const [open_modal, setOpen_Modal] = useState(false);
   const [open_modal_add, setOpen_Modal_add] = useState(false);
@@ -406,7 +406,7 @@ function CEO() {
       id_car: car_id,
     }).then(
       (response) => {
-        window.location = '/CEO';
+        window.location = '/Ceo_car';
 
       }
     );
@@ -437,6 +437,8 @@ function CEO() {
 
   const [employee_list, setEmployee_list] = useState([]);
   const [car_list, setCar_list] = useState([]);
+
+  const [job_detail_list, setJob_detail_list] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -478,10 +480,19 @@ function CEO() {
         })
     }, 1);
 
+    const timer3 = setTimeout(() => {
+        Axios.get('http://localhost:3001/job_detail_list').then((response) => {
+          //console.log(response);
+          setJob_detail_list(response.data);
+
+        })
+    }, 1);
+
     return () => {
       clearTimeout(timer);
       clearTimeout(timer1);
       clearTimeout(timer2);
+      clearTimeout(timer3);
 
 
     }
@@ -666,15 +677,15 @@ function CEO() {
     },
     
     {
-      text: 'ผู้ใช้งาน',
-      icon: <SearchIcon />,
-      path: '/Employee'
-    },
-    {
-      text: 'ค้นหา',
-      icon: <SearchIcon />,
-      path: '/search_car'
-    },
+        text: 'ผู้ใช้งาน',
+        icon: <SearchIcon />,
+        path: '/Employee'
+      },
+      {
+        text: 'ค้นหา',
+        icon: <SearchIcon />,
+        path: '/search_car'
+      },
     // {
     //     text: 'Srearch Publication',
     //     //icon: <SearchIcon />,
@@ -732,7 +743,7 @@ function CEO() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                พนักงาน
+                รถยนต์
               </Typography>
 
             </Toolbar>
@@ -796,168 +807,14 @@ function CEO() {
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 3, borderColor: 'divider' }}>
                 <Tabs onChange={handleChange} /*aria-label="basic tabs example"*/>
-                  <Tab label="ข้อมูลพนักงาน" {...a11yProps(0)} />
-                  {/* <Tab label="Car" {...a11yProps(1)} /> */}
+                  {/* <Tab label="Employee" {...a11yProps(0)} /> */}
+                  <Tab label="ข้อมูลรถยนต์" {...a11yProps(0)} />
                 </Tabs>
               </Box>
 
+              
+
               <TabPanel value={value} index={0}>
-                <div style={{ height: 300, width: '100%' }}>
-                <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  p: 0,
-                  m: 0,
-                  bgcolor: 'background.paper',
-                  borderRadius: 0,
-                }}
-              >
-                <Item>
-                <FormControl sx={{ m: 1, minWidth: 150 }} size="small" >
-                      <InputLabel id="demo-simple-select-label">แผนก</InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={search}
-                        label="แผนก"
-                        onChange={(e) => { setSearch(e.target.value) }}
-                        //onChange={(e)=>console.log(e)}
-                        //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                      >
-                      {department_list.map((row1) => (
-                            <MenuItem
-                              key={row1.id_de}
-                              value={row1.name}
-                              //name={row1.name}
-                              //style={getStyles(name, personName, theme)}
-                            >
-                              {row1.name}
-                            </MenuItem>
-                      ))}
-                        
-                      </Select>
-                      
-                    </FormControl>
-                    <Button
-                      //startIcon={<AddRoundedIcon />}
-                      //type="submit"
-                      //fullWidth
-                      variant="outlined"
-                      color="primary"
-                      sx={{ mt: 1, mb: 0 }}
-                      onClick={(e) => { setSearch('') }}
-                      >
-                      ค่าเริ่มต้น
-                      </Button>
-                
-                  
-                </Item>
-                <Item>
-                  
-                  </Item>
-                <Item>
-                <Button
-                      startIcon={<AddRoundedIcon />}
-                      //type="submit"
-                      //fullWidth
-                      variant="outlined"
-                      color="primary"
-                      sx={{ mt: 1, mb: 0 }}
-                      onClick={(e) => handle_on_modal_add()}
-                    >
-                      เพิ่มข้อมูลพนักงาน
-                    </Button>
-
-                </Item>
-              </Box>
-                  <TableContainer component={Paper}>
-
-                  
-
-
-
-
-                  
-                    {/* <FormControl sx={{ m: 1, width: 233, mt: 0 }}>
-                    ค้นหาข้อมูลแผนก
-                    </FormControl>  */}
-                    
-
-                    
-                     
-                    <br />
-                    <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell width={100}>id_employee</TableCell>
-                          <TableCell width={200} align="left">ชื่อ</TableCell>
-                          <TableCell width={200} align="left">นามสกุล</TableCell>
-                          <TableCell width={200} align="left">แผนก</TableCell>
-                          <TableCell width={170} align="right"></TableCell>
-                          {/* <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell> */}
-
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                      {employee_list.filter((row) => {
-                        if(search.toLowerCase() === ''){
-                          return row;
-                        }
-                        else if(search.toLowerCase() !== ''){
-                          return row.department.toLowerCase().includes(search.toLowerCase())
-                        }
-
-                      })
-                      .map((row) => (
-                          <TableRow
-                            key={row.id_employee}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                          >
-                            <TableCell component="th" scope="row" >{row.id_employee} </TableCell>
-                            <TableCell align="left">{row.first_name}</TableCell>
-                            <TableCell align="left">{row.last_name}</TableCell>
-                            <TableCell align="left">{row.department}</TableCell>
-
-                            <Button
-                              startIcon={<ModeEditIcon />}
-                              //type="submit"
-                              //fullWidth
-                              variant="outlined"
-                              color="warning"
-
-                              sx={{ mt: 1, mb: 0 }}
-                              onClick={(e) => handleClickOpen_Modal(row.id_employee)}
-
-                            >
-                              แก้ไข
-                            </Button>
-
-                            <Button
-                              startIcon={<DeleteIcon />}
-                              //type="submit"
-                              //fullWidth
-                              variant="outlined"
-                              color="error"
-
-                              sx={{ mt: 1, mb: 0 }}
-                              onClick={(e) => {
-                                delete_emp(row.id_employee);
-                              }}
-
-                            >
-                              ลบ
-                            </Button>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </div>
-              </TabPanel>
-
-              {/* <TabPanel value={value} index={1}>
                 <div style={{ height: 300, width: '100%' }}>
                 <Box
                 sx={{
@@ -1006,7 +863,8 @@ function CEO() {
                 <Item>
                   
                   </Item>
-                <Item><Button
+                {/* <Item>
+                <Button
                     startIcon={<AddRoundedIcon />}
                     //type="submit"
                     //fullWidth
@@ -1014,9 +872,10 @@ function CEO() {
                     color="primary"
                     sx={{ mt: 2, mb: 0 }}
                     onClick={(e) => handle_on_modal_add_car(e)}
-                  >
+                >
                     เพิ่มข้อมูลรถยนต์
-                  </Button></Item>
+                </Button>
+                </Item> */}
               </Box>
                   
                   
@@ -1027,95 +886,38 @@ function CEO() {
                     <Table sx={{ minWidth: 1100 }} size="large" aria-label="a dense table">
                       <TableHead>
                         <TableRow>
+                          <TableCell width={100} align="left">id_job</TableCell>
                           <TableCell width={100} align="left">id_car</TableCell>
-                          <TableCell width={100} align="left">หมวด</TableCell>
-                          <TableCell width={200} align="left">เลขทะเบียน</TableCell>
-                          <TableCell width={300} align="left">จังหวัด</TableCell>
-                          <TableCell width={300} align="left">ยี่ห้อ</TableCell>
-                          <TableCell width={300} align="left">รุ่น</TableCell>
-                          <TableCell width={200} align="left">ปี</TableCell>
-                          <TableCell width={300} align="left">เลขตัวถัง</TableCell>
-                          <TableCell width={1000} align="right"></TableCell>
+                          <TableCell width={200} align="left">เงินสด/ประกัน</TableCell>
+                          <TableCell width={300} align="left">สภาพรถ</TableCell>
+                          <TableCell width={300} align="left">วันรับเข้า</TableCell>
+                          <TableCell width={300} align="left">วันรับรถ</TableCell>
+                          
                           {/* <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell> 
+                                                <TableCell width={170} align="right"></TableCell> */}
 
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                      {car_list.filter((row) => {
-                        if(car_search.toLowerCase() === '' && car_search1.toLowerCase() === ''){
-                          return row;
-                        }
-                        else if(car_search.toLowerCase() !== '' && car_search1.toLowerCase() !== ''){
-                          return row.catagory.toLowerCase().includes(car_search.toLowerCase()) && row.number_car.toLowerCase().includes(car_search1.toLowerCase())
-                        }
-                        else if(car_search.toLowerCase() !== '' && car_search1.toLowerCase() === ''){
-                          return row.catagory.toLowerCase().includes(car_search.toLowerCase()) 
-                        }
-                        else if(car_search.toLowerCase() === '' && car_search1.toLowerCase() !== ''){
-                          return row.number_car.toLowerCase().includes(car_search1.toLowerCase()) 
-                        }
-
-                      }).map((row) => (
+                      {job_detail_list.map((row) => (
                           <TableRow
-                            key={row.ad_username}
+                            key={row.id_job}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                           >
-                            <TableCell component="th" scope="row">{row.id_car}</TableCell>
-                            <TableCell align="left">{row.catagory}</TableCell>
-                            <TableCell align="left">{row.number_car}</TableCell>
-                            <TableCell align="left">{row.province}</TableCell>
-                            <TableCell align="left">{row.brand}</TableCell>
-                            <TableCell align="left">{row.model}</TableCell>
-                            <TableCell align="left">{row.year_car}</TableCell>
-                            <TableCell align="left">{row.vin}</TableCell>
-
-                            <Button
-                              startIcon={<AssignmentTurnedInIcon />}
-                              //type="submit"
-                              //fullWidth
-                              variant="outlined"
-                              color="primary"
-                              sx={{ mt: 1, mb: 0 }}
-                              onClick={() => {
-                                alert('กดปุ่มสร้าง');
-                              }}
-                            >
-                              สร้าง
-                            </Button>
-                            <Button
-                              startIcon={<ModeEditIcon />}
-                              //type="submit"
-                              //fullWidth
-                              variant="outlined"
-                              color="warning"
-
-                              sx={{ mt: 1, mb: 0 }}
-                              onClick={(e) => handleClickOpen_Modal_car(row.id_car)}
-                            >
-                              แก้ไข
-                            </Button>
-                            <Button
-                              startIcon={<DeleteIcon />}
-                              //type="submit"
-                              //fullWidth
-                              variant="outlined"
-                              color="error"
-                              sx={{ mt: 1, mb: 0 }}
-                              onClick={(e) => {
-                                delete_car(row.id_car);
-                              }}
-
-                            >
-                              ลบ
-                            </Button>
+                            <TableCell component="th" scope="row">{row.id_job}</TableCell>
+                            <TableCell align="left" >{row.id_car}</TableCell>
+                            <TableCell align="left" >{row.payment}</TableCell>
+                            <TableCell align="left">{row.status}</TableCell>
+                            <TableCell align="left">{row.first_date}</TableCell>
+                            <TableCell align="left">{row.end_date}</TableCell>
+                           
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
                 </div>
-              </TabPanel> */}
+              </TabPanel>
 
             </Box>
 
@@ -1243,6 +1045,7 @@ function CEO() {
               label="หมวด"
               name="car_catagory"
               //label="First Name"
+              inputProps={{ maxLength: 3 }}
 
               fullWidth
               variant="standard"
@@ -1259,6 +1062,7 @@ function CEO() {
               id="car_number_car"
               name="car_number_car"
               label="เลขทะเบียน"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1331,6 +1135,7 @@ function CEO() {
               id="car_year_car"
               name="car_year_car"
               label="ปี"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1347,6 +1152,7 @@ function CEO() {
               id="car_vin"
               name="car_vin"
               label="เลขตัวถัง"
+              inputProps={{ maxLength: 17 }}
 
               fullWidth
               variant="standard"
@@ -1489,6 +1295,7 @@ function CEO() {
               //label="First Name"
               //pattern="[0-9]{1-4}"
               //maxLength={4}
+              inputProps={{ maxLength: 3 }}
 
               fullWidth
               variant="standard"
@@ -1506,6 +1313,7 @@ function CEO() {
               name="number_car"
               label="เลขทะเบียน"
               //pattern="[0-9]{1-4}"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1596,6 +1404,7 @@ function CEO() {
               name="year_car"
               label="ปี"
               //pattern="[0-9]{1-4}"
+              inputProps={{ maxLength: 4 }}
 
               fullWidth
               variant="standard"
@@ -1613,6 +1422,7 @@ function CEO() {
               name="vin"
               label="เลขตัวถัง"
               //pattern="{17}"
+              inputProps={{ maxLength: 17 }}
 
               fullWidth
               variant="standard"
@@ -1644,4 +1454,4 @@ function CEO() {
   )
 }
 
-export default CEO;
+export default Search_car;

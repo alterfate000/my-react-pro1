@@ -670,6 +670,11 @@ function Ceo_car() {
         icon: <SearchIcon />,
         path: '/Employee'
       },
+      {
+        text: 'ค้นหา',
+        icon: <SearchIcon />,
+        path: '/search_car'
+      },
     // {
     //     text: 'Srearch Publication',
     //     //icon: <SearchIcon />,
@@ -1062,8 +1067,8 @@ function Ceo_car() {
                             <TableCell align="left">{row.model}</TableCell>
                             <TableCell align="left">{row.year_car}</TableCell>
                             <TableCell align="left">{row.vin}</TableCell>
-
-                            <Button
+                            {row.count_job == '0'?
+                              <Button
                               startIcon={<AssignmentTurnedInIcon />}
                               //type="submit"
                               //fullWidth
@@ -1072,9 +1077,27 @@ function Ceo_car() {
                               sx={{ mt: 1, mb: 0 }}
                               //onClick={()=>window.location = 'Create_job'}
                               onClick={()=>window.location = `Create_job/${row.id_car}`}
-                            >
+                              >
                               สร้าง
-                            </Button>
+                            </Button> 
+                            
+                            
+                            :
+                            <Button
+                              startIcon={<AssignmentTurnedInIcon />}
+                              //type="submit"
+                              //fullWidth
+                              variant="contained"
+                              //color="primary"
+                              sx={{ mt: 1, mb: 0 }}
+                              //onClick={()=>window.location = 'Create_job'}
+                              disabled
+                              >
+                              สร้าง
+                            </Button> 
+
+                            }
+                            
                             <Button
                               startIcon={<ModeEditIcon />}
                               //type="submit"
