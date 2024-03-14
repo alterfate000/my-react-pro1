@@ -400,36 +400,19 @@ function Employee() {
     },
     
     {
-        text: 'ผู้ใช้งาน',
-        icon: <SearchIcon />,
-        path: '/Employee'
-      },
-    
-    // {
-    //     text: 'Srearch Publication',
-    //     //icon: <SearchIcon />,
-    //     path: '/MPub'
-    // },
-    // {
-    //     text: 'Upload Project',
-    //     icon: <FileUploadIcon />,
-    //     path: '/MUpPJ'
-    // }
-    // ,{
-    //     text: 'Upload Publication',
-    //     //icon: <FileUploadIcon />,
-    //     path: '/MUpPub'
-    // },
-    // {
-    //     text: 'Manage Keyword and Member',
-    //     //icon: <EditOutlinedIcon />,
-    //     path: '/EditData'
-    // },
-
+      text: 'ผู้ใช้งาน',
+      icon: <SearchIcon />,
+      path: '/Employee'
+    },
     {
-      text: 'Log Out',
+      text: 'ค้นหา',
+      icon: <SearchIcon />,
+      path: '/search_car'
+    },
+    {
+      text: 'ออกจากระบบ',
       //icon: <LogoutOutlined />,
-      path: '/AdminLogin'
+      path: 'Login'
     }
   ]
 

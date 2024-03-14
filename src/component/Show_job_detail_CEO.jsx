@@ -191,22 +191,16 @@ function EditToolbar(props) {
 
 
 
-function Create_job() { 
+function Show_job_detail_CEO() { 
 
-    //const [car_number,setCar_number] = useState("");
-    const [chassis_number,setChassis_number] = useState("");
+    
 
     const [testdata,setTestdata] = useState([]);
-    const { pageNumber } = useParams();
+    const { id_job } = useParams();
    
-    const [pair_job_list,setPair_job_list] = useState([]);
-    // const { setRows, setRowModesModel } = props;
+    
 
-
-    const [car_number,setCar_number] = useState("");
-    const [car_vin,setCar_vin] = useState("");
-    const [car_brand,setCar_brand] = useState("");
-    const [car_year,setCar_year] = useState("");
+    
     
 
     const [value, setValue] = useState("");
@@ -216,13 +210,6 @@ function Create_job() {
 
 
     //-----------เตรียมข้อมูลลง DB
-
-
-    const [start_date, setStart_date] = useState();
-    const [end_date, setEnd_date] = useState();
-    const [car_status, setCar_status] = useState("ปกติ");
-    const [pay_status, setPay_status] = useState("เงินสด");
-    const [input_detail, setInput_detail] = useState('');
 
     //------------------------------------------
 
@@ -366,15 +353,6 @@ function Create_job() {
     console.log('rows = ');
     console.log(rows[number_id-2]);
 
-    // set data to database
-
-    // setInputDB_id(rows[number_id-2].id);
-    // setInputDB_pair_detail(rows[number_id-2].pair_detail);
-    // setInputDB_pair_location(rows[number_id-2].pair_location);
-    // setInputDB_id_job(pageNumber);
-    // console.log('input = ')
-    // console.log(inputDB_pair_detail);
-
     Axios.post("http://localhost:3001/add_job_list", {
         id: rows[number_id-2].id,
         pair_detail: rows[number_id-2].pair_detail,
@@ -397,28 +375,7 @@ function Create_job() {
         width: 80,
         editable: true 
     },
-    // {
-    //     field: 'spares_parts',
-    //     headerName: 'อะไหล่',
-    // //   type: 'number',
-    //     width: 180,
-    //     align: 'left',
-    //     headerAlign: 'left',
-    //     editable: true,
-    // },
-    // {
-    //     field: 'location_part',
-    //     headerName: 'ตำแหน่ง',
-    //     width: 80,
-    //     editable: true,
-    //     type: 'singleSelect',
-    //     valueOptions: ['L', 'R'],
-    // },
-    // {   field: 'id_order_pair',
-    //     headerName: '',
-    //     width: 80,
-    //     editable: true 
-    // },
+    
     {
         field: 'pair_detail',
         headerName: 'รายการซ่อม',
@@ -436,31 +393,7 @@ function Create_job() {
         type: 'singleSelect',
         valueOptions: ['L', 'R'],
     },
-    // { field: 'name', headerName: 'รายการที่', width: 80, editable: true },
-    // {
-    //   field: 'age',
-    //   headerName: 'อะไหล่',
-    // //   type: 'number',
-    //   width: 180,
-    //   align: 'left',
-    //   headerAlign: 'left',
-    //   editable: true,
-    // },
-    // {
-    //   field: 'joinDate',
-    //   headerName: 'ตำแหน่ง',
-    // //   type: 'date',
-    //   width: 180,
-    //   editable: true,
-    // },
-    // {
-    //   field: 'role',
-    //   headerName: 'ตำแหน่ง',
-    //   width: 80,
-    //   editable: true,
-    //   type: 'singleSelect',
-    //   valueOptions: ['L', 'R'],
-    // },
+    
     {
       field: 'actions',
       type: 'actions',
@@ -511,107 +444,6 @@ function Create_job() {
 
 
 
-
-
-
-    
-
-
-
-    //----------------------test data ------------------------------------------
-
-
-    // const columns = [
-    //     { field: 'id',key: 'id', headerName: 'id', width: 50, editable: true },
-    //     { field: 'name', key: 'name', headerName: 'รายการซ่อม', width: 180, editable: true },
-    //     {
-    //       field: 'position',
-    //       headerName: 'ตำแหน่ง',
-    //       key: 'position',
-    //       editable: true,
-    //       align: 'left',
-    //       headerAlign: 'left',
-    //     },
-    //     {
-    //       field: 'total_item',
-    //       headerName: 'จำนวน',
-    //       key: 'total_item',
-    //       type: 'number',
-    //       width: 180,
-    //       editable: true,
-    //     },
-        
-    //     {
-    //       field: 'actions',
-    //       type: 'actions',
-    //       headerName: 'Actions',
-    //       width: 100,
-    //       cellClassName: 'actions',
-    //       getActions: ({ id }) => {       
-    //         // if (isInEditMode) {
-    //           return [
-    //             // <GridActionsCellItem
-    //             //   icon={<SaveIcon />}
-    //             //   label="Save"
-    //             //   sx={{
-    //             //     color: 'primary.main',
-    //             //   }}
-    //             // //   onClick={handleSaveClick(id)}
-    //             // />,
-    //             <GridActionsCellItem
-    //               icon={<CancelIcon />}
-    //               label="Cancel"
-    //               className="textPrimary"
-    //             //   onClick={handleCancelClick(id)}
-    //               //onClick={({e})=>haddleClickDeleteJob()}
-    //               color="inherit"
-    //             />,
-    //           ];
-    //         // }
-    //       },
-    //     },
-    //     // {
-    //     //   field: 'lastLogin',
-    //     //   headerName: 'Last Login',
-    //     //   type: 'dateTime',
-    //     //   width: 220,
-    //     //   editable: true,
-    //     // },
-    //   ];
-      
-    //   const rows = [
-    //     {
-    //       id: 1,
-    //       name: 'ไฟท้าย',
-    //       position: 'R',
-    //       total_item: 1,
-    //       lastLogin: randomUpdatedDate(),
-    //     },
-    //     {
-    //       id: 2,
-    //       name: 'กระจกข้าง',
-    //       position: 'L',
-    //       total_item: 2,
-    //       lastLogin: randomUpdatedDate(),
-    //     },
-    //     {
-    //       id: 3,
-    //       name: 'ประตู',
-    //       position: 'R',
-    //       total_item: 1,
-    //       lastLogin: randomUpdatedDate(),
-    //     },
-    //     {
-    //       id: 4,
-    //       name: 'ล้อหน้า',
-    //       position: 'R',
-    //       total_item: 2,
-    //       lastLogin: randomUpdatedDate(),
-    //     },
-       
-    //   ];
-
-
       //----------------------------------------------------------------
 
       const [emp_step1_list,setEmp_step1_list] = useState([]);
@@ -643,16 +475,6 @@ function Create_job() {
       const [emp_step6,setEmp_step6] = useState('');
       const [emp_step7,setEmp_step7] = useState('');
 
-      
-
-      const [name_emp_step1,setName_Emp_step1] = useState('');
-      const [name_emp_step2,setName_Emp_step2] = useState('');
-      const [name_emp_step3,setName_Emp_step3] = useState('');
-      const [name_emp_step4,setName_Emp_step4] = useState('');
-      const [name_emp_step5,setName_Emp_step5] = useState('');
-      const [name_emp_step6,setName_Emp_step6] = useState('');
-      const [name_emp_step7,setName_Emp_step7] = useState('');
-
       //--------------------------------------
 
       const [chk_emp_step1,setChk_Emp_step1] = useState(false);
@@ -673,8 +495,6 @@ function Create_job() {
         Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
             //console.log(response.data);
             setShow_Emp_step1(response.data[0].first_name +' ' + response.data[0].last_name);
-            setName_Emp_step1(response.data[0].first_name +' ' + response.data[0].last_name+' ,');
-            
         })
       }
 
@@ -683,7 +503,6 @@ function Create_job() {
         Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
             //console.log(response);
             setShow_Emp_step2(response.data[0].first_name +' ' + response.data[0].last_name);
-            setName_Emp_step2(response.data[0].first_name +' ' + response.data[0].last_name+' ,');
         })
         
         
@@ -694,7 +513,6 @@ function Create_job() {
         Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
             //console.log(response);
             setShow_Emp_step3(response.data[0].first_name +' ' + response.data[0].last_name);
-            setName_Emp_step3(response.data[0].first_name +' ' + response.data[0].last_name+' ,');
         })
       }
 
@@ -703,7 +521,6 @@ function Create_job() {
         Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
             //console.log(response);
             setShow_Emp_step4(response.data[0].first_name +' ' + response.data[0].last_name);
-            setName_Emp_step4(response.data[0].first_name +' ' + response.data[0].last_name+' ,');
         })
       }
 
@@ -712,7 +529,6 @@ function Create_job() {
         Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
             //console.log(response);
             setShow_Emp_step5(response.data[0].first_name +' ' + response.data[0].last_name);
-            setName_Emp_step5(response.data[0].first_name +' ' + response.data[0].last_name+' ,');
         })
       }
 
@@ -721,7 +537,6 @@ function Create_job() {
         Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
             //console.log(response);
             setShow_Emp_step6(response.data[0].first_name +' ' + response.data[0].last_name);
-            setName_Emp_step6(response.data[0].first_name +' ' + response.data[0].last_name+' ,');
         })
       }
 
@@ -732,7 +547,6 @@ function Create_job() {
         Axios.get(`http://localhost:3001/get_name_emp/${e}`).then((response) => {
             //console.log(response);
             setShow_Emp_step7(response.data[0].first_name +' ' + response.data[0].last_name);
-            setName_Emp_step7(response.data[0].first_name +' ' + response.data[0].last_name+' ,');
         })
 
         
@@ -740,43 +554,16 @@ function Create_job() {
 
       const haddle_summit_order=(e)=>{
 
-        var ans = confirm("ยืนยันบันทึกใบสั่งซ่อม" );
+        var ans = confirm("ยืนยันอัพเดทใบสั่งซ่อม" );
         if (ans == true) {
-            Axios.post("http://localhost:3001/save_job_detail", {
-            pay_status:pay_status,
-            car_status:car_status,
-            start_date:start_date,
-            end_date:end_date,
-            input_detail:input_detail,
-            emp_step1:emp_step1,
-            emp_step2:emp_step2,
-            emp_step3:emp_step3,
-            emp_step4:emp_step4,
-            emp_step5:emp_step5,
-            emp_step6:emp_step6,
-            emp_step7:emp_step7,
-            car_number:car_number,
-            car_brand:car_brand,
-            car_vin:car_vin,
-            car_year:car_year,
-            list_name_emp:name_emp_step1 +' '+name_emp_step2+' '+name_emp_step3+' '+name_emp_step4+' '+name_emp_step5+' '+name_emp_step6+' '+name_emp_step7,
-            in_car:pageNumber,
+            Axios.put("http://localhost:3001/update_status_job_ceo", {
+                status_job:'02',
+                id_job:id_job,
+            
 
             }).then((response) => {
-            console.log(response.data);
-            if(response.data != 'KO!'){
-                console.log('if')
-                Axios.put("http://localhost:3001/update_count_job", {
-                count_job: '1',
-                id_car: pageNumber,
-                }).then(
-                (response) => {
-                    window.location = '/Ceo_car';
-                    
-
-                }
-                );
-            }
+                window.location = '/search_car';
+            
 
         });
 
@@ -801,10 +588,50 @@ function Create_job() {
 
 
 
+      const [job_detail_list,setJob_detail_list] = useState([]);
 
+      //---------------------------------- เก็บข้อมูลที่ส่งจาก DB
+
+
+        const [car_number,setCar_number] = useState("");
+        const [car_vin,setCar_vin] = useState("");
+        const [car_brand,setCar_brand] = useState("");
+        const [car_year,setCar_year] = useState("");
+        const [start_date, setStart_date] = useState();
+        const [end_date, setEnd_date] = useState();
+        const [car_status, setCar_status] = useState("ปกติ");
+        const [pay_status, setPay_status] = useState("เงินสด");
+        const [input_detail, setInput_detail] = useState('');
+        const [status_job, setStatus_job] = useState('00');
+
+
+        const [show_order_pair, setShow_order_pair] = useState([]);
+
+        
 
 
       useEffect(() => {
+
+        const timer0 = setTimeout(() => {
+            console.log('This will run after 1 second!');
+            Axios.get(`http://localhost:3001/show_job_detail/${id_job}`).then((response) => {
+              //console.log(response);
+              setCar_number(response.data[0].car_number);
+              setCar_vin(response.data[0].car_vin);
+              setCar_brand(response.data[0].car_brand);
+              setCar_status(response.data[0].status)
+              setCar_year(response.data[0].car_year);
+              setStart_date(response.data[0].first_date);
+              setEnd_date(response.data[0].end_date);
+              setInput_detail(response.data[0].detail);
+              setPay_status(response.data[0].payment);
+              setStatus_job(response.data[0].status_job);
+            })
+          }, 10);
+
+
+
+
         const timer = setTimeout(() => {
           console.log('This will run after 1 second!');
           Axios.get('http://localhost:3001/test_data').then((response) => {
@@ -838,83 +665,125 @@ function Create_job() {
         }, 50);
 
         const timer3 = setTimeout(() => {
-            Axios.get('http://localhost:3001/employee_step1_list').then((response) => {
+            Axios.get(`http://localhost:3001/show_employee_step1/${id_job}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setEmp_step1_list(response.data);
+                if(response.data[0]!= ''){
+                    setShow_Emp_step1(response.data[0].first_name + ' '+ response.data[0].last_name);
+                    setChk_Emp_step1(true);
+                    console.log('hello in step1');
+
+                }
+                
+                
                 
             })
         }, 50);
 
         const timer4 = setTimeout(() => {
-            Axios.get('http://localhost:3001/employee_step2_list').then((response) => {
+            Axios.get(`http://localhost:3001/show_employee_step2/${id_job}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setEmp_step2_list(response.data);
+                if(response.data[0] != ''){
+                    setShow_Emp_step2(response.data[0].first_name + ' '+ response.data[0].last_name);
+                    setChk_Emp_step2(true);
+
+                }
                 
             })
         }, 70);
 
         const timer5 = setTimeout(() => {
-            Axios.get('http://localhost:3001/employee_step3_list').then((response) => {
+            Axios.get(`http://localhost:3001/show_employee_step3/${id_job}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setEmp_step3_list(response.data);
+                if(response.data[0] != ''){
+                    setShow_Emp_step3(response.data[0].first_name + ' '+ response.data[0].last_name);
+                    setChk_Emp_step3(true);
+
+                }
                 
             })
         }, 90);
 
         const timer6 = setTimeout(() => {
-            Axios.get('http://localhost:3001/employee_step4_list').then((response) => {
+            Axios.get(`http://localhost:3001/show_employee_step4/${id_job}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setEmp_step4_list(response.data);
+                if(response.data[0] != ''){
+                    setShow_Emp_step4(response.data[0].first_name + ' '+ response.data[0].last_name);
+                    setChk_Emp_step4(true);
+
+                }
                 
             })
         }, 100);
 
         const timer7 = setTimeout(() => {
-            Axios.get('http://localhost:3001/employee_step5_list').then((response) => {
+            Axios.get(`http://localhost:3001/show_employee_step5/${id_job}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setEmp_step5_list(response.data);
+                if(response.data[0] != ''){
+                    setShow_Emp_step5(response.data[0].first_name + ' '+ response.data[0].last_name);
+                    setChk_Emp_step5(true);
+
+                }
                 
             })
         }, 110);
 
         const timer8 = setTimeout(() => {
-            Axios.get('http://localhost:3001/employee_step6_list').then((response) => {
+            Axios.get(`http://localhost:3001/show_employee_step6/${id_job}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setEmp_step6_list(response.data);
+                if(response.data[0] != ''){
+                    setShow_Emp_step6(response.data[0].first_name + ' '+ response.data[0].last_name);
+                    setChk_Emp_step6(true);
+
+                }
                 
             })
         }, 120);
 
         const timer9 = setTimeout(() => {
-            Axios.get('http://localhost:3001/employee_step7_list').then((response) => {
+            Axios.get(`http://localhost:3001/show_employee_step7/${id_job}`).then((response) => {
                 //console.log(response);
                 //setPair_job_list(response.data);
-                setEmp_step7_list(response.data);
+                if(response.data[0] != ''){
+                    setShow_Emp_step7(response.data[0].first_name + ' '+ response.data[0].last_name);
+                    setChk_Emp_step7(true);
+
+                }
                 
             })
         }, 130);
+
+        const timer10 = setTimeout(() => {
+            Axios.get(`http://localhost:3001/show_order_pair/${id_job}`).then((response) => {
+                //console.log(response);
+                //setPair_job_list(response.data);
+                setShow_order_pair(response.data); 
+                
+            })
+        }, 200);
 
         
     
         
     
         return () => {
-          clearTimeout(timer);
-          clearTimeout(timer1);
-          clearTimeout(timer2);
-          clearTimeout(timer3);
-          clearTimeout(timer4);
-          clearTimeout(timer5);
-          clearTimeout(timer6);
-          clearTimeout(timer7);
-          clearTimeout(timer8);
-          clearTimeout(timer9);
+            clearTimeout(timer0);
+            clearTimeout(timer);
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+            clearTimeout(timer3);
+            clearTimeout(timer4);
+            clearTimeout(timer5);
+            clearTimeout(timer6);
+            clearTimeout(timer7);
+            clearTimeout(timer8);
+            clearTimeout(timer9);
+            clearTimeout(timer10);
       
          
     
@@ -930,6 +799,18 @@ function Create_job() {
         
       }
 
+
+      const onChangeDate = (e) => {
+        const isoDate = new Date(e);
+        const formattedDate = `${isoDate.getDate()}/${isoDate.getMonth() + 1}/${isoDate.getFullYear()}`;
+        console.log('formattedDate');
+        console.log(formattedDate);
+    
+        // console.log(d.getMonth() + 1);
+        // console.log(d.getFullYear());
+        return formattedDate;
+      }
+
       
 
 
@@ -938,7 +819,7 @@ function Create_job() {
 
 return (
     <div>
-        <Nav/>
+        {/* <Nav/> */}
         <br/>
         <ThemeProvider theme={themes}>
         <CssBaseline />
@@ -1137,31 +1018,23 @@ return (
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Select
-                                        labelInValue
-                                        //placeholder="สถานะโครงการ"
-                                        size='large'
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="th_name"
+                                        //required
+                                        // fullWidth
+                                        //id="Name"
+                                        // label="ชื่อโครงการ (ภาษาไทย)"
+                                        color='maincolor'   
+                                        size="small"
+                                        width='10'
+                                        disabled
                                         value={pay_status}
-                                        //value={proj_status}
-                                        style={{
-                                            width: 250,
+                                        variant="filled"
+
+                                        // autoFocus
+                                        //placeholder = "render"
                                         
-                                        }}
-                                        //defaultValue={proj_status}
-                                        onChange={(event) => {
-                                            setPay_status(event.label)
-                                            //console.log(event.value)
-                                        }}
-                                        options={[
-                                        {
-                                            value: '00',
-                                            label: 'เงินสด',
-                                        },
-                                        {
-                                            value: '01',
-                                            label: 'ประกัน',
-                                        },
-                                        ]}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={2}>
@@ -1177,31 +1050,23 @@ return (
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Select
-                                        labelInValue
-                                        //placeholder="สถานะโครงการ"
-                                        size='large'
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="th_name"
+                                        //required
+                                        // fullWidth
+                                        //id="Name"
+                                        // label="ชื่อโครงการ (ภาษาไทย)"
+                                        color='maincolor'   
+                                        size="small"
+                                        width='10'
+                                        disabled
                                         value={car_status}
-                                        //value={proj_status}
-                                        style={{
-                                            width: 250,
+                                        variant="filled"
+
+                                        // autoFocus
+                                        //placeholder = "render"
                                         
-                                        }}
-                                        //defaultValue={proj_status}
-                                        onChange={(event) => {
-                                            setCar_status(event.label)
-                                            console.log(event.value)
-                                        }}
-                                        options={[
-                                        {
-                                            value: '00',
-                                            label: 'ปกติ',
-                                        },
-                                        {
-                                            value: '01',
-                                            label: 'เสียหาย',
-                                        },
-                                        ]}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={2}>
@@ -1217,18 +1082,24 @@ return (
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DatePicker
-                                            //label="วันที่เริ่มต้น"
-                                            value={cm_date}
-                                            openTo="year"
-                                            views={["year", "month", "day"]}
-                                            inputFormat="DD/MM/YYYY"
-                                            slotProps={{ textField: { size: 'small' } }}
-                                            onChange={onChangeStartDate}
-                                            
-                                        />
-                                    </LocalizationProvider>
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="th_name"
+                                        //required
+                                        // fullWidth
+                                        //id="Name"
+                                        // label="ชื่อโครงการ (ภาษาไทย)"
+                                        color='maincolor'   
+                                        size="small"
+                                        width='10'
+                                        disabled
+                                        value={onChangeDate(start_date)}
+                                        variant="filled"
+
+                                        // autoFocus
+                                        //placeholder = "render"
+                                        
+                                    />
                                 </Grid>
                                 <Grid item xs={12} sm={2}>
                                     <Typography  
@@ -1243,18 +1114,24 @@ return (
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DatePicker
-                                            //label="วันที่เริ่มต้น"
-                                            value={cd_date}
-                                            openTo="year"
-                                            views={["year", "month", "day"]}
-                                            inputFormat="DD/MM/YYYY"
-                                            slotProps={{ textField: { size: 'small' } }}
-                                            onChange={onChangeEndDate}
-                                            
-                                        />
-                                    </LocalizationProvider>
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="th_name"
+                                        //required
+                                        // fullWidth
+                                        //id="Name"
+                                        // label="ชื่อโครงการ (ภาษาไทย)"
+                                        color='maincolor'   
+                                        size="small"
+                                        width='10'
+                                        disabled
+                                        value={onChangeDate(end_date)}
+                                        variant="filled"
+
+                                        // autoFocus
+                                        //placeholder = "render"
+                                        
+                                    />
                                 </Grid>
                                 <Grid item xs={12} sm={2}>
                                     <Typography  
@@ -1269,15 +1146,22 @@ return (
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
-                                    <TextField 
-                                        fullWidth
-                                        color='maincolor'
-                                        // placeholder="รายละเอียดโครงการ"
-                                        multiline
-                                        //rows={10}
-                                        maxRows={10}
-                                        minRows={2}
-                                        onChange={(e)=>{setInput_detail(e.target.value)}}
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="th_name"
+                                        //required
+                                        // fullWidth
+                                        //id="Name"
+                                        // label="ชื่อโครงการ (ภาษาไทย)"
+                                        color='maincolor'   
+                                        size="small"
+                                        width='10'
+                                        disabled
+                                        value={input_detail}
+                                        variant="filled"
+
+                                        // autoFocus
+                                        //placeholder = "render"
                                         
                                     />
                                 </Grid>
@@ -1314,36 +1198,7 @@ return (
                             <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
                                
                             </Grid>
-                            {/* <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mb: 1 }}>
-                                <Grid item xs={12} sm={6}>
-                                    <Button
-                                        //type="submit"
-                                        fullWidth
-                                        variant="outlined"
-                                        color="maincolor"
-                                        sx={{ mt: 2, mb: 2 }}
-                                        
-                                    >
-                                        Cancle
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                   
-                                        <Button
-                                        startIcon={<FileUploadIcon/>}
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="maincolor"
-                                            sx={{ mt: 2, mb: 2 }}
-                                            
-                                            //addProject
-                                        >
-                                        Upload
-                                        </Button>
-                                
-                                </Grid>
-                            </Grid> */}
+                            
 
                         </Box>
                         
@@ -1359,39 +1214,46 @@ return (
                             boxShadow: 1
                         }}
                     >
-                         
-                        {/* <Typography component="h5" variant="h7" color="#ffffff" fontFamily='Century Gothic' letterSpacing={1} textAlign='left'
-                            style={background} sx={{ p: 1, borderRadius: 2 }} width={1150}>
-                            New Project
-                        </Typography> */}
+                        <Typography  sx={{pl: 5,fontSize: 'h6.fontSize', fontStyle: 'italic'}}>
+                            รายการซ่อม
+                        </Typography>
                         
-
                         <Box component="form" noValidate    sx={{ mt: 3}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >
+                                
                             
                                 <Grid item xs={12} sm={12}>
                                     
+                                
                                     <Box sx={{ width: '90%' ,pl:3}}>
                                     <div style={{ height: 300, width: '100%' }}>
-                                        {/* <DataGrid rows={testdata} columns={columns} 
+                                    <TableContainer component={Paper}>
+                                    
+                                        <Table sx={{ minWidth: 300 }} size="large" aria-label="a dense table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell width={10} align="left"></TableCell>
+                                                    <TableCell width={100} align="left">รายละเอียด</TableCell>
+                                                    <TableCell width={50} align="left">ตำแหน่ง</TableCell>                                                    
+                                                    
+                                                </TableRow>
+                                            </TableHead>
+                                        <TableBody>
+                                        {show_order_pair.map((row,index) => (
+                                            <TableRow
+                                                key={row.id_job}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                    <TableCell component="th" scope="row">{index+1}</TableCell>
+                                                    <TableCell align="left" >{row.pair_detail}</TableCell>
+                                                    <TableCell align="left" >{row.pair_location}</TableCell>
+                                                   
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                        </Table>
+                                    </TableContainer>
                                         
-                                        /> */}
-                                        <DataGrid
-                                            rows={rows}
-                                            columns={columns}
-                                            // getRowId={(row) => rows.id_order_pair}
-                                            editMode="row"
-                                            rowModesModel={rowModesModel}
-                                            onRowModesModelChange={handleRowModesModelChange}
-                                            onRowEditStop={handleRowEditStop}
-                                            processRowUpdate={processRowUpdate}
-                                            slots={{
-                                            toolbar: EditToolbar,
-                                            }}
-                                            slotProps={{
-                                            toolbar: { setRows, setRowModesModel },
-                                            }}
-                                        />
                                         
                                     </div>                                   
                                     </Box>                                 
@@ -1452,33 +1314,14 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox  checked={chk_emp_step1} onChange={(e)=>{ setChk_Emp_step1(e.target.checked)}} />} label="เคาะ" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox  checked={chk_emp_step1}  disabled/>} label="เคาะ" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
                         {chk_emp_step1 == true?
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={show_emp_step1}
-                                label="=ชื่อ"
-
-                                onChange={(e) => { haddle_emp1(e) }}
-                                //onChange={(e)=>console.log(e)}
-                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                                >
-                                {emp_step1_list.map((row1) => (
-                                        <MenuItem
-                                        key={row1.id_employee}
-                                        value={row1.id_employee}
-                                        //name={row1.name}
-                                        //style={getStyles(name, personName, theme)}
-                                        >
-                                        {row1.first_name +" "+row1.last_name}
-                                        </MenuItem>
-                                ))}
-                                    
-                            </Select>
+                            <Typography  sx={{pl: 5}}>
+                                {show_emp_step1}
+                            </Typography>
                             :
                             <></>
 
@@ -1500,33 +1343,14 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox checked={chk_emp_step2} onChange={(e)=>{ setChk_Emp_step2(e.target.checked)}}/>} label="เตรียมพื้น" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step2} disabled/>} label="เตรียมพื้น" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
                         {chk_emp_step2 == true?
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={show_emp_step2}
-                                label="=ชื่อ"
-
-                                onChange={(e) => { haddle_emp2(e) }}
-                                //onChange={(e)=>console.log(e)}
-                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                                >
-                                {emp_step2_list.map((row1) => (
-                                        <MenuItem
-                                        key={row1.id_employee}
-                                        value={row1.id_employee}
-                                        //name={row1.name}
-                                        //style={getStyles(name, personName, theme)}
-                                        >
-                                        {row1.first_name +" "+row1.last_name}
-                                        </MenuItem>
-                                ))}
-                                    
-                            </Select>
+                            <Typography  sx={{pl: 5}}>
+                                {show_emp_step2}
+                            </Typography>
                             :
                             <></>
 
@@ -1547,33 +1371,14 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox checked={chk_emp_step3} onChange={(e)=>{ setChk_Emp_step3(e.target.checked)}} />} label="ผสมสี" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step3} disabled />} label="ผสมสี" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
                         {chk_emp_step3 == true?
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={show_emp_step3}
-                                label="=ชื่อ"
-
-                                onChange={(e) => { haddle_emp3(e) }}
-                                //onChange={(e)=>console.log(e)}
-                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                                >
-                                {emp_step3_list.map((row1) => (
-                                        <MenuItem
-                                        key={row1.id_employee}
-                                        value={row1.id_employee}
-                                        //name={row1.name}
-                                        //style={getStyles(name, personName, theme)}
-                                        >
-                                        {row1.first_name +" "+row1.last_name}
-                                        </MenuItem>
-                                ))}
-                                    
-                            </Select>
+                            <Typography  sx={{pl: 5}}>
+                                {show_emp_step3}
+                            </Typography>
                             :
                             <></>
 
@@ -1595,33 +1400,14 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox checked={chk_emp_step4} onChange={(e)=>{ setChk_Emp_step4(e.target.checked)}} />} label="พ่นสี" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step4} disabled />} label="พ่นสี" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
                         {chk_emp_step4 == true?
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={show_emp_step4}
-                                label="=ชื่อ"
-
-                                onChange={(e) => { haddle_emp4(e) }}
-                                //onChange={(e)=>console.log(e)}
-                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                                >
-                                {emp_step4_list.map((row1) => (
-                                        <MenuItem
-                                        key={row1.id_employee}
-                                        value={row1.id_employee}
-                                        //name={row1.name}
-                                        //style={getStyles(name, personName, theme)}
-                                        >
-                                        {row1.first_name +" "+row1.last_name}
-                                        </MenuItem>
-                                ))}
-                                    
-                            </Select>
+                        <Typography  sx={{pl: 5}}>
+                            {show_emp_step4}
+                        </Typography>
                             :
                             <></>
 
@@ -1642,33 +1428,14 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox checked={chk_emp_step5} onChange={(e)=>{ setChk_Emp_step5(e.target.checked)}} />} label="ประกอบ" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step5} disabled />} label="ประกอบ" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
                         {chk_emp_step5 == true?
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={show_emp_step5}
-                                label="=ชื่อ"
-
-                                onChange={(e) => { haddle_emp5(e) }}
-                                //onChange={(e)=>console.log(e)}
-                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                                >
-                                {emp_step5_list.map((row1) => (
-                                        <MenuItem
-                                        key={row1.id_employee}
-                                        value={row1.id_employee}
-                                        //name={row1.name}
-                                        //style={getStyles(name, personName, theme)}
-                                        >
-                                        {row1.first_name +" "+row1.last_name}
-                                        </MenuItem>
-                                ))}
-                                    
-                            </Select>
+                            <Typography  sx={{pl: 5}}>
+                                {show_emp_step5}
+                            </Typography>
                             :
                             <></>
 
@@ -1689,33 +1456,14 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox checked={chk_emp_step6} onChange={(e)=>{ setChk_Emp_step6(e.target.checked)}} />} label="ขัดสี" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step6} disabled />} label="ขัดสี" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
                         {chk_emp_step6 == true?
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={show_emp_step6}
-                                label="=ชื่อ"
-
-                                onChange={(e) => { haddle_emp6(e) }}
-                                //onChange={(e)=>console.log(e)}
-                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                                >
-                                {emp_step6_list.map((row1) => (
-                                        <MenuItem
-                                        key={row1.id_employee}
-                                        value={row1.id_employee}
-                                        //name={row1.name}
-                                        //style={getStyles(name, personName, theme)}
-                                        >
-                                        {row1.first_name +" "+row1.last_name}
-                                        </MenuItem>
-                                ))}
-                                    
-                            </Select>
+                            <Typography  sx={{pl: 5}}>
+                                {show_emp_step6}
+                            </Typography>
                             :
                             <></>
 
@@ -1736,33 +1484,14 @@ return (
                         <Box component="form" noValidate    sx={{ mt: 2}}>
                             <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 4 }} >                     
                                 <Grid item xs={12} sm={12}>
-                                    <FormControlLabel control={<Checkbox checked={chk_emp_step7} onChange={(e)=>{ setChk_Emp_step7(e.target.checked)}} />} label="ทำความสะอาด" sx={{pl:5}} />                                
+                                    <FormControlLabel control={<Checkbox checked={chk_emp_step7} disabled />} label="ทำความสะอาด" sx={{pl:5}} />                                
                                 </Grid>                        
                             </Grid>                          
                         </Box>
                         {chk_emp_step7 == true?
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={show_emp_step7}
-                                label="=ชื่อ"
-
-                                onChange={(e) => { haddle_emp7(e) }}
-                                //onChange={(e)=>console.log(e)}
-                                //onChange={(e)=>haddleSetDepartment(e.target.value)}
-                                >
-                                {emp_step7_list.map((row1) => (
-                                        <MenuItem
-                                        key={row1.id_employee}
-                                        value={row1.id_employee}
-                                        //name={row1.name}
-                                        //style={getStyles(name, personName, theme)}
-                                        >
-                                        {row1.first_name +" "+row1.last_name}
-                                        </MenuItem>
-                                ))}
-                                    
-                            </Select>
+                            <Typography  sx={{pl: 5}}>
+                                {show_emp_step7}
+                            </Typography>
                             :
                             <></>
 
@@ -1792,25 +1521,31 @@ return (
                                         variant="outlined"
                                         color="maincolor"
                                         sx={{ mt: 2, mb: 2 }}
-                                        onClick={()=>{console.log(testdata)}}
+                                        onClick={()=>{window.location = '/search_car'}}
                                     >
-                                        ยกเลิก
+                                        ย้อนกลับ
                                     </Button>
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
-                                   
-                                        <Button
-                                            startIcon={<FileUploadIcon/>}
-                                            //type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="maincolor"
-                                            sx={{ mt: 2, mb: 2 }}
-                                            onClick={(e)=>{haddle_summit_order(e)}}
-                                            //addProject
-                                        >
-                                        บันทึกการสั่งซ่อม
-                                        </Button>
+                                   {status_job == '01'?
+                                   <Button
+                                        startIcon={<FileUploadIcon/>}
+                                        //type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="maincolor"
+                                        sx={{ mt: 2, mb: 2 }}
+                                        onClick={(e)=>{haddle_summit_order(e)}}
+                                        //addProject
+                                    >
+                                        อัพเดทสถานะงาน
+                                    </Button>
+                                   :
+                                   <></>
+
+                                
+                                    }
+                                        
                                 
                                 </Grid>
                             </Grid>                          
@@ -1828,93 +1563,5 @@ return (
   )
 }
 
-export default Create_job;
+export default Show_job_detail_CEO;
 
-// const columns = [
-//     { field: 'id', headerName: 'id', width: 50, editable: true },
-//     { field: 'name', headerName: 'รายการซ่อม', width: 180, editable: true },
-//     {
-//       field: 'position',
-//       headerName: 'ตำแหน่ง',
-      
-//       editable: true,
-//       align: 'left',
-//       headerAlign: 'left',
-//     },
-//     {
-//       field: 'total_item',
-//       headerName: 'จำนวน',
-//       type: 'number',
-//       width: 180,
-//       editable: true,
-//     },
-//     ,
-//     {
-//       field: 'actions',
-//       type: 'actions',
-//       headerName: 'Actions',
-//       width: 100,
-//       cellClassName: 'actions',
-//       getActions: ({ id }) => {       
-//         // if (isInEditMode) {
-//           return [
-//             // <GridActionsCellItem
-//             //   icon={<SaveIcon />}
-//             //   label="Save"
-//             //   sx={{
-//             //     color: 'primary.main',
-//             //   }}
-//             // //   onClick={handleSaveClick(id)}
-//             // />,
-//             <GridActionsCellItem
-//               icon={<CancelIcon />}
-//               label="Cancel"
-//               className="textPrimary"
-//             //   onClick={handleCancelClick(id)}
-//               onClick={haddleClickDeleteJob(id)}
-//               color="inherit"
-//             />,
-//           ];
-//         // }
-//       },
-//     },
-//     // {
-//     //   field: 'lastLogin',
-//     //   headerName: 'Last Login',
-//     //   type: 'dateTime',
-//     //   width: 220,
-//     //   editable: true,
-//     // },
-//   ];
-  
-//   const rows = [
-//     {
-//       id: 1,
-//       name: 'ไฟท้าย',
-//       position: 'R',
-//       total_item: 1,
-//       lastLogin: randomUpdatedDate(),
-//     },
-//     {
-//       id: 2,
-//       name: 'กระจกข้าง',
-//       position: 'L',
-//       total_item: 2,
-//       lastLogin: randomUpdatedDate(),
-//     },
-//     {
-//       id: 3,
-//       name: 'ประตู',
-//       position: 'R',
-//       total_item: 1,
-//       lastLogin: randomUpdatedDate(),
-//     },
-//     {
-//       id: 4,
-//       name: 'ล้อหน้า',
-//       position: 'R',
-//       total_item: 2,
-//       lastLogin: randomUpdatedDate(),
-//     },
-   
-//   ];

@@ -437,8 +437,27 @@ function CEO() {
 
   const [employee_list, setEmployee_list] = useState([]);
   const [car_list, setCar_list] = useState([]);
+  //const [loginStatus, setLoginStatus] = useState("");
 
   useEffect(() => {
+    const timer0 = setTimeout(() => {
+      Axios.get('http://localhost:3001/login_user').then((response) => {
+        console.log(response.data);
+        if (response.data.loggedIn == true && response.data.user == 'manager') {
+          console.log(response.data.user);
+
+          setLoginStatus(response.data.user);
+        }
+        else if (response.data.loggedIn == true && response.data.user == 'ceo') {
+          //window.location = '/ceo'
+        }
+        else{
+          window.location = '/login'
+        }
+      })
+    }, 1);
+
+
     const timer = setTimeout(() => {
       console.log('This will run after 1 second!');
       Axios.get('http://localhost:3001/employee_list').then((response) => {
@@ -479,6 +498,7 @@ function CEO() {
     }, 1);
 
     return () => {
+      clearTimeout(timer0);
       clearTimeout(timer);
       clearTimeout(timer1);
       clearTimeout(timer2);
@@ -675,31 +695,10 @@ function CEO() {
       icon: <SearchIcon />,
       path: '/search_car'
     },
-    // {
-    //     text: 'Srearch Publication',
-    //     //icon: <SearchIcon />,
-    //     path: '/MPub'
-    // },
-    // {
-    //     text: 'Upload Project',
-    //     icon: <FileUploadIcon />,
-    //     path: '/MUpPJ'
-    // }
-    // ,{
-    //     text: 'Upload Publication',
-    //     //icon: <FileUploadIcon />,
-    //     path: '/MUpPub'
-    // },
-    // {
-    //     text: 'Manage Keyword and Member',
-    //     //icon: <EditOutlinedIcon />,
-    //     path: '/EditData'
-    // },
-
     {
       text: 'ออกจากระบบ',
       //icon: <LogoutOutlined />,
-      path: '/AdminLogin'
+      path: 'Login'
     }
   ]
 

@@ -266,12 +266,8 @@ export default function SignInSide() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      Axios.get("http://localhost:3001/login_user").then((response) => {
-        console.log(response)
-        if (response.data.loggedIn == true) {
-          
-          setLoginStatus(response.data.user[0].ad_username);
-        }
+      Axios.get("http://localhost:3001/login_def").then(() => {
+       
       });
     },0);
     return () => {

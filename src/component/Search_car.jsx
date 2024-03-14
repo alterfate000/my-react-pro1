@@ -73,7 +73,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 // import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import Chip from '@mui/material/Chip';
 
 
 const drawerWidth = 240;
@@ -221,6 +221,9 @@ function Search_car() {
   const [search, setSearch] = useState('');
   const [car_search, setCar_search] = useState('');
   const [car_search1, setCar_search1] = useState('');
+  const [emp_search, setEmp_search] = useState('');
+  const [status_job_Search, setStatus_job_Search] = useState('');
+  
 
 
 
@@ -439,8 +442,28 @@ function Search_car() {
   const [car_list, setCar_list] = useState([]);
 
   const [job_detail_list, setJob_detail_list] = useState([]);
+  const [list_name_emp, setList_name_emp] = useState('');
+
+
 
   useEffect(() => {
+    const timer0 = setTimeout(() => {
+      Axios.get('http://localhost:3001/login_user').then((response) => {
+        console.log(response.data);
+        if (response.data.loggedIn == true && response.data.user == 'manager') {
+          console.log(response.data.user);
+
+          setLoginStatus(response.data.user);
+        }
+        else if (response.data.loggedIn == true && response.data.user == 'ceo') {
+          //window.location = '/ceo'
+        }
+        else{
+          window.location = '/login'
+        }
+      })
+    }, 10);
+
     const timer = setTimeout(() => {
       console.log('This will run after 1 second!');
       Axios.get('http://localhost:3001/employee_list').then((response) => {
@@ -488,16 +511,29 @@ function Search_car() {
         })
     }, 1);
 
+    
+
     return () => {
+      clearTimeout(timer0);
       clearTimeout(timer);
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
+      
 
 
     }
 
   }, []);
+
+
+  const emp_list =(id)=>{
+    // Axios.get(`http://localhost:3001/show_name_emp_list/${id}`).then((response) => {
+    //       //console.log(response);
+    //       setList_name_emp(response.data);
+
+    // })
+  }
 
   const data = [
     {
@@ -566,13 +602,10 @@ function Search_car() {
 
 
   const department_list = [
-    {id_de: '10',name:'เคาะ'},
-    {id_de: '20',name:'เตรียมพื้น'},
-    {id_de: '30',name:'ผสมสี'},
-    {id_de: '40',name:'พ่นสี'},
-    {id_de: '50',name:'ประกอบ'},
-    {id_de: '60',name:'ขัดสี'},
-    {id_de: '70',name:'ทำความสะอาด'}
+    {id_de: '00',name:'กำลังดำเนินการ'},
+    {id_de: '01',name:'รออนุมัติ'},
+    {id_de: '02',name:'เสร็จสิ้น'},
+    
   
   ];
 
@@ -710,9 +743,39 @@ function Search_car() {
     {
       text: 'ออกจากระบบ',
       //icon: <LogoutOutlined />,
-      path: '/AdminLogin'
+      path: 'Login'
     }
   ]
+
+  const onChangeDate = (e) => {
+    const isoDate = new Date(e);
+    const formattedDate = `${isoDate.getDate()}/${isoDate.getMonth() + 1}/${isoDate.getFullYear()}`;
+    console.log('formattedDate');
+    console.log(formattedDate);
+
+    // console.log(d.getMonth() + 1);
+    // console.log(d.getFullYear());
+    return formattedDate;
+  }
+
+  const [car_name,setCar_name] = useState('')
+
+  const onChange_car = (e) => {
+    const id_car = e;
+    
+    Axios.get(`http://localhost:3001/car_detail/${id_car}`).then((response)=>{
+      setCar_name(response.data[0].catagory+"-"+response.data[0].number_car+"-"+response.data[0].province)
+
+
+    })
+
+    // console.log(d.getMonth() + 1);
+    // console.log(d.getFullYear());
+    
+  }
+
+
+
 
   const logout_on=()=>{
 
@@ -831,36 +894,57 @@ function Search_car() {
                     autoFocus
                     required
                     margin="dense"
-                    label="ค้นหาตามหมวด"
+                    label="ค้นหาตามชื่อ"
                     name="first_Name"
                     //label="First Name"
 
                     sx={{ m: 1, minWidth: 50 }}
                     variant="standard"
-                    value={car_search}
+                    value={emp_search}
                     onChange={(event) => {
                       console.log(event);
-                      setCar_search(event.target.value);
+                      setEmp_search(event.target.value);
                     }}
                   />
-                  <TextField
-                    autoFocus
-                    required
-                    margin="dense"
-                    label="ค้นหาตามเลขทะเบียน"
-                    name="first_Name"
-                    //label="First Name"
-
-                    sx={{ m: 1, minWidth: 50 }}
-                    variant="standard"
-                    value={car_search1}
-                    onChange={(event) => {
-                      console.log(event);
-                      setCar_search1(event.target.value);
-                    }}
-                  />
+                  
                 </Item>
                 <Item>
+                <FormControl sx={{ m: 1, minWidth: 150 }} size="small" >
+                      <InputLabel id="demo-simple-select-label">สถานะงาน</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={status_job_Search}
+                        label="สถานะงาน"
+                        onChange={(e) => { setStatus_job_Search(e.target.value) }}
+                        //onChange={(e)=>console.log(e)}
+                        //onChange={(e)=>haddleSetDepartment(e.target.value)}
+                      >
+                      {department_list.map((row1) => (
+                            <MenuItem
+                              key={row1.id_de}
+                              value={row1.id_de}
+                              name={row1.id_de}
+                              //style={getStyles(name, personName, theme)}
+                            >
+                              {row1.name}
+                            </MenuItem>
+                      ))}
+                        
+                      </Select>
+                      
+                    </FormControl>
+                    <Button
+                      //startIcon={<AddRoundedIcon />}
+                      //type="submit"
+                      //fullWidth
+                      variant="outlined"
+                      color="primary"
+                      sx={{ mt: 1, mb: 0 }}
+                      onClick={(e) => { setStatus_job_Search('') }}
+                      >
+                      ค่าเริ่มต้น
+                      </Button>
                   
                   </Item>
                 {/* <Item>
@@ -887,30 +971,61 @@ function Search_car() {
                       <TableHead>
                         <TableRow>
                           <TableCell width={100} align="left">id_job</TableCell>
-                          <TableCell width={100} align="left">id_car</TableCell>
+                          <TableCell width={300} align="left">id_car</TableCell>
                           <TableCell width={200} align="left">เงินสด/ประกัน</TableCell>
-                          <TableCell width={300} align="left">สภาพรถ</TableCell>
-                          <TableCell width={300} align="left">วันรับเข้า</TableCell>
-                          <TableCell width={300} align="left">วันรับรถ</TableCell>
+                          <TableCell width={200} align="left">สภาพรถ</TableCell>
+                          <TableCell width={200} align="left">วันรับเข้า</TableCell>
+                          <TableCell width={200} align="left">วันรับรถ</TableCell>
+                          <TableCell width={200} align="left">ผู้รับผิดชอบ</TableCell>
+                          <TableCell width={150} align="center">สถานะงาน</TableCell>
                           
-                          {/* <TableCell width={170} align="right"></TableCell>
-                                                <TableCell width={170} align="right"></TableCell> */}
+                          <TableCell width={200} align="right"></TableCell>
+                          
 
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                      {job_detail_list.map((row) => (
+                      {job_detail_list.filter((row) => {
+
+                      if(emp_search.toLowerCase() === '' && status_job_Search.toLowerCase() === ''){
+                        return row;
+                      }
+                      else if(emp_search.toLowerCase() !== '' && status_job_Search.toLowerCase() !== ''){
+                        return row.list_name_emp.toLowerCase().includes(emp_search.toLowerCase()) && row.status_job.toLowerCase().includes(status_job_Search.toLowerCase())
+                      }
+                      else if(emp_search.toLowerCase() !== '' && status_job_Search.toLowerCase() === ''){
+                        return row.list_name_emp.toLowerCase().includes(emp_search.toLowerCase()) 
+                      }
+                      else if(emp_search.toLowerCase() === '' &&  status_job_Search.toLowerCase() !== ''){
+                        return row.status_job.toLowerCase().includes(status_job_Search.toLowerCase()) 
+                      }
+                        }).map((row) => (
                           <TableRow
                             key={row.id_job}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                           >
                             <TableCell component="th" scope="row">{row.id_job}</TableCell>
-                            <TableCell align="left" >{row.id_car}</TableCell>
+                            <TableCell align="left" >{row.car_number}</TableCell>
                             <TableCell align="left" >{row.payment}</TableCell>
                             <TableCell align="left">{row.status}</TableCell>
-                            <TableCell align="left">{row.first_date}</TableCell>
-                            <TableCell align="left">{row.end_date}</TableCell>
-                           
+                            <TableCell align="left">{onChangeDate(row.first_date)}</TableCell>
+                            <TableCell align="left">{onChangeDate(row.end_date)}</TableCell>
+                            <TableCell align="left">{row.list_name_emp}</TableCell>
+                            <TableCell align="left">
+                              {
+                                row.status_job == "02" ?
+                                  <Chip label="งานเสร็จสิ้น" color="success" /> 
+                                :row.status_job == "01"? 
+                                  <Chip label="รออนุมัติ" color="primary" />
+                                :
+                                  <Chip label="กำลังดำเนินการ" style={{ backgroundColor: 'red', color: 'white' }} />
+                              }
+                            </TableCell>
+                            <TableCell onClick={() => { window.location = `Show_job_detail_CEO/${row.id_job}` }} align="left" >
+                              <Typography variant="body1" style={{textDecoration: 'underline'} }>
+                                ดูข้อมูลเพิ่มเติม
+                              </Typography>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -982,12 +1097,12 @@ function Search_car() {
               }}
             />
             <FormControl variant="standard" fullWidth>
-            <InputLabel id="demo-simple-select-label">แผนก</InputLabel>
+            <InputLabel id="demo-simple-select-label">สถานะงาน</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={emp_department}
-              label="แผนก"
+              label="สถานะงาน"
               //onChange={(e)=>console.log(e)}
               onChange={(e)=>haddleSetDepartment(e.target.value)}
             >
