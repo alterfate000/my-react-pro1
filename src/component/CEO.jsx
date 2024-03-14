@@ -673,7 +673,13 @@ function CEO() {
 
 
 
+  
   const item = [
+    {
+      text: 'Home',
+      icon: <ManageAccountsIcon />,
+      path: '/Home'
+    },
     {
       text: 'พนักงาน',
       icon: <ManageAccountsIcon />,

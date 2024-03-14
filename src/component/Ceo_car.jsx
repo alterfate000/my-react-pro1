@@ -676,6 +676,11 @@ function Ceo_car() {
 
   const item = [
     {
+      text: 'Home',
+      icon: <ManageAccountsIcon />,
+      path: '/Home'
+    },
+    {
       text: 'พนักงาน',
       icon: <ManageAccountsIcon />,
       path: '/CEO'

@@ -88,10 +88,9 @@ function Home() {
 
   return (
     <>
-    <ResponsiveAppBar/>
     
-    {loginStatus == "ceo" ? <div>{loginStatus}</div>
-    :loginStatus == "manager"?
+    
+    {loginStatus == "ceo" ? 
     <div>
       <Box
       sx={{
@@ -109,6 +108,26 @@ function Home() {
       <DemoPaper variant="outlined" style={{background:'green'}}>เสร็จสิ้น : {job_status_02}</DemoPaper>
     </Box>
     </div>
+    :loginStatus == "manager"?<>
+    <ResponsiveAppBar/>
+    <div>
+      <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        '& > :not(style)': {
+          m: 1,
+          width: 128,
+          height: 128,
+        },
+      }}
+    >
+      <DemoPaper variant="elevation" style={{background:'red'}}>กำลังดำเนินการ : {job_status_00}</DemoPaper>
+      <DemoPaper variant="outlined" style={{background:'blue'}}>รออนุมัติ : {job_status_01}</DemoPaper>
+      <DemoPaper variant="outlined" style={{background:'green'}}>เสร็จสิ้น : {job_status_02}</DemoPaper>
+    </Box>
+    </div>
+    </>
     :<h1>error</h1>}
     
     </>

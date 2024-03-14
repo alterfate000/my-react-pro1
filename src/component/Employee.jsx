@@ -389,6 +389,11 @@ function Employee() {
 
   const item = [
     {
+      text: 'Home',
+      icon: <ManageAccountsIcon />,
+      path: '/Home'
+    },
+    {
       text: 'พนักงาน',
       icon: <ManageAccountsIcon />,
       path: '/CEO'
